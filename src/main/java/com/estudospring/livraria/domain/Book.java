@@ -8,28 +8,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Category implements Serializable {
+public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private String name, author;
+	private Integer edition ;
 	
-	@ManyToMany(mappedBy="category")
-	private List<Book> book = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name= "Book_Category",
+		joinColumns= @JoinColumn(name= "book_id"),
+		inverseJoinColumns= @JoinColumn(name= "category_id")
+	)
+	private List<Category> category = new ArrayList<>();
 	
-	public Category() {
+	public Book() {
 	}
 
-	public Category(Integer id, String name) {
+	public Book(Integer id, String name, String author, Integer edition) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.author = author;
+		this.edition = edition;
 	}
 
 	public Integer getId() {
@@ -48,12 +57,28 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
-	public List<Book> getBook() {
-		return book;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setBook(List<Book> book) {
-		this.book = book;
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public Integer getEdition() {
+		return edition;
+	}
+
+	public void setEdition(Integer edition) {
+		this.edition = edition;
+	}
+
+	public List<Category> getCategory() {
+		return category;
+	}
+
+	public void setCategory(List<Category> category) {
+		this.category = category;
 	}
 
 	@Override
@@ -72,7 +97,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Book other = (Book) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -80,5 +105,9 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
+	
+	
 
 }
