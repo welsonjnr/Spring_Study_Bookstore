@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.OneToMany;
 
 @Entity
 public class City implements Serializable {
@@ -24,8 +22,7 @@ public class City implements Serializable {
 	private String cep;
 	private String estado;
 	
-	@JsonManagedReference
-	@ManyToMany(mappedBy="city")
+	@OneToMany(mappedBy = "city")
 	private List<Address> address = new ArrayList<>();
 	
 	public City() {

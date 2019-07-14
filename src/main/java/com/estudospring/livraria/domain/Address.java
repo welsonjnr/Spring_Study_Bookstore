@@ -1,51 +1,43 @@
 package com.estudospring.livraria.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Address implements Serializable{
+public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String avenue;
 	private Integer number;
 	private String bairro;
-	private String cep;
 	
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name= "City_Address",
-			joinColumns= @JoinColumn(name= "Address_id"),
-			inverseJoinColumns= @JoinColumn(name= "City_id")
-			)
-	private List<City> city = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="city_id")
+	private City city;
 
 	public Address() {
 	}
 
-	public Address(Integer id, String avenue, Integer number, String bairro, String cep) {
+	public Address(Integer id, String avenue, Integer number, String bairro, City city) {
 		super();
 		this.id = id;
 		this.avenue = avenue;
 		this.number = number;
 		this.bairro = bairro;
-		this.cep = cep;
+		this.city = city;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -79,19 +71,11 @@ public class Address implements Serializable{
 		this.bairro = bairro;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public List<City> getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(List<City> city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
@@ -119,7 +103,5 @@ public class Address implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
