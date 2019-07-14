@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.estudospring.livraria.domain.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 	
 @Entity
 public class Client implements Serializable {
@@ -30,6 +31,7 @@ public class Client implements Serializable {
 	private Integer period;
 	private Integer type;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> address = new ArrayList<>();
 	
@@ -37,6 +39,11 @@ public class Client implements Serializable {
 	@CollectionTable(name="Phones")
 	private Set<String> phones = new HashSet<>();
 
+	private List<Loan> loans = new ArrayList<>();
+	
+	public Client() {
+	}
+	
 	public Client(Integer id, String name, String cpf, String course, String institution, String email, Integer period,
 			UserType type) {
 		super();
@@ -129,6 +136,14 @@ public class Client implements Serializable {
 	public void setType(UserType type) {
 		this.type = type.getCod();
 	}
+	
+	public List<Loan> getLoans() {
+		return loans;
+	}
+
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
+	}
 
 	@Override
 	public int hashCode() {
@@ -154,7 +169,5 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }

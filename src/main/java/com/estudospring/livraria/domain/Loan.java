@@ -1,42 +1,43 @@
 package com.estudospring.livraria.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.estudospring.livraria.domain.enums.LoanStatus;
 
 @Entity
-public class City implements Serializable {
+public class Loan implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
-	private String cep;
-	private String estado;
+	private Date loanDay;
+	private Integer status;
 	
-	@JsonBackReference
-	@OneToMany(mappedBy = "city")
-	private List<Address> address = new ArrayList<>();
+	private Client client;
 	
-	public City() {
+	private Address address;
+	
+	private Book book;
+	
+	public Loan() {
 	}
-
-	public City(Integer id, String name, String cep, String estado) {
+	
+	public Loan(Integer id, Date loanDay, LoanStatus status, Client client, Address address, Book book) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.cep = cep;
-		this.estado = estado;
+		this.loanDay = loanDay;
+		this.status= status.getCod();
+		this.client = client;
+		this.address = address;
+		this.book = book;	
 	}
 
 	public Integer getId() {
@@ -47,36 +48,44 @@ public class City implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Date getLoanDay() {
+		return loanDay;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLoanDay(Date loanDay) {
+		this.loanDay = loanDay;
 	}
 
-	public String getCep() {
-		return cep;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
-	public String getEstado() {
-		return estado;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
-	public List<Address> getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<Address> address) {
+	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	@Override
@@ -95,7 +104,7 @@ public class City implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		City other = (City) obj;
+		Loan other = (Loan) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -103,7 +112,6 @@ public class City implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 	
 }
