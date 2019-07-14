@@ -24,20 +24,23 @@ public class Address implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="city_id")
 	private City city;
-
+	
+	@ManyToOne
+	@JoinColumn(name="client_id")
+	private Client client;
+	
 	public Address() {
 	}
 
-	public Address(Integer id, String avenue, Integer number, String bairro, City city) {
+	public Address(Integer id, String avenue, Integer number, String bairro, City city, Client client) {
 		super();
 		this.id = id;
 		this.avenue = avenue;
 		this.number = number;
 		this.bairro = bairro;
 		this.city = city;
+		this.client = client;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -79,6 +82,14 @@ public class Address implements Serializable {
 		this.city = city;
 	}
 
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
