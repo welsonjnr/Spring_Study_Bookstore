@@ -1,5 +1,6 @@
 package com.estudospring.livraria;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
+import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.UserType;
 import com.estudospring.livraria.repositories.AddressRepository;
 import com.estudospring.livraria.repositories.BookRepository;
 import com.estudospring.livraria.repositories.CategoryRepository;
 import com.estudospring.livraria.repositories.CityRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
+import com.estudospring.livraria.repositories.LoanRepository;
 
 @SpringBootApplication
 public class LivrariaEstudoSpringApplication implements CommandLineRunner {
@@ -33,6 +36,9 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 	private AddressRepository addressRepository;
 	@Autowired
 	private ClientRepository clientRepository;
+	@Autowired
+	private LoanRepository loanRepository;
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(LivrariaEstudoSpringApplication.class, args);
@@ -90,6 +96,17 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Loan loan1 = new Loan (null,sdf.parse("05/04/2019 10:30"), LoanStatus.BORROWED, bk1, cli1);
+		Loan loan2 = new Loan(null, sdf.parse("15/07/2019 07:20"), LoanStatus.CANCELED, bk2, cli1);
+		Loan loan3 = new Loan(null, sdf.parse("06/10/2019 12:45"), LoanStatus.LATE, bk3, cli3);
+		
+		cli1.getLoans().addAll(Arrays.asList(loan1, loan2));
+		cli3.getLoans().addAll(Arrays.asList(loan3));
+		
+		loanRepository.saveAll(Arrays.asList(loan1, loan2, loan3));
+
 		
 	}
 }

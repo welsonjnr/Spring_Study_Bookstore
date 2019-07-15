@@ -7,8 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Loan implements Serializable {
@@ -21,23 +25,26 @@ public class Loan implements Serializable {
 	private Date loanDay;
 	private Integer status;
 	
-	private Client client;
-	
-	private Address address;
-	
+	@JsonManagedReference
+	@OneToOne
+	@JoinColumn(name="book_id")
 	private Book book;
+	
+	@JsonManagedReference
+	@ManyToOne
+	@JoinColumn(name="client_id")
+	private Client client;
 	
 	public Loan() {
 	}
 	
-	public Loan(Integer id, Date loanDay, LoanStatus status, Client client, Address address, Book book) {
+	public Loan(Integer id, Date loanDay, LoanStatus status, Book book, Client client) {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
-		this.status= status.getCod();
+		this.status = status.getCod();
+		this.book = book;
 		this.client = client;
-		this.address = address;
-		this.book = book;	
 	}
 
 	public Integer getId() {
@@ -63,29 +70,21 @@ public class Loan implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
+	
 	public Book getBook() {
 		return book;
 	}
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+	
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	@Override
@@ -112,6 +111,5 @@ public class Loan implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }
