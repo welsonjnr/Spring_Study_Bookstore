@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Book implements Serializable {
@@ -31,7 +32,7 @@ public class Book implements Serializable {
 	@JoinTable(name = "Book_Category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> category = new ArrayList<>();
 
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToOne(mappedBy = "book")
 	private Loan loan;
 

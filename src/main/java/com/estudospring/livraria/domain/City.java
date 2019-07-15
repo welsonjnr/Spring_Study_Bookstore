@@ -70,7 +70,7 @@ public class City implements Serializable {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
+	
 	public List<Address> getAddress() {
 		return address;
 	}
