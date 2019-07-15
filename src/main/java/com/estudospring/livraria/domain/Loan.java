@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Loan implements Serializable {
@@ -25,12 +25,12 @@ public class Loan implements Serializable {
 	private Date loanDay;
 	private Integer status;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@OneToOne
 	@JoinColumn(name="book_id")
 	private Book book;
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;

@@ -86,14 +86,6 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cit2, cli2);
 		Address adr3 = new Address(null, "Saião", 23, "Calibri", cit3, cli3);
 		
-		cit1.getAddress().addAll(Arrays.asList(adr1));
-		cit2.getAddress().addAll(Arrays.asList(adr2));
-		cit2.getAddress().addAll(Arrays.asList(adr3));
-		
-		cli1.getAdress().addAll(Arrays.asList(adr1));
-		cli2.getAdress().addAll(Arrays.asList(adr2));
-		cli3.getAdress().addAll(Arrays.asList(adr3));
-		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -106,8 +98,5 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		cli3.getLoans().addAll(Arrays.asList(loan3));
 		
 		loanRepository.saveAll(Arrays.asList(loan1, loan2, loan3));
-
-		
 	}
 }
-

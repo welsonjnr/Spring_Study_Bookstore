@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Category implements Serializable {
@@ -22,7 +22,7 @@ public class Category implements Serializable {
 	private Integer id;
 	private String name;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToMany(mappedBy="category")
 	private List<Book> book = new ArrayList<>();
 	
