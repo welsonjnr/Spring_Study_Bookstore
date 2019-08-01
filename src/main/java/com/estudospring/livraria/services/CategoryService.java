@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Category;
+import com.estudospring.livraria.dto.CategoryDTO;
 import com.estudospring.livraria.repositories.CategoryRepository;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;
 
@@ -64,8 +65,14 @@ public class CategoryService {
 		return repo.findAll();
 	}
 	
-	// Tu vai fazer esse método para que pegue as informações da categoria que são
-	// para serem mudadas e mudar e retornar para o método update
+	//Método para transforma uma categoria normal em categoriaDTO
+	public Category fromDTO(CategoryDTO objDto) {
+		return new Category(objDto.getId(), objDto.getName());
+	}
+	
+	/* Tu vai fazer esse método para que pegue as informações da categoria que são
+	para serem mudadas e mudar e retornar para o método update
+	*/
 	private void updateData(Category newObj, Category obj) {
 		newObj.setName(obj.getName());
 	}
