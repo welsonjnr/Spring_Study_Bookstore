@@ -21,6 +21,6 @@ public class LoanService {
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto not found! Id: " + id + ", Tipo: " + Loan.class.getName());
 		}
-		return obj.orElse(null);
+		return obj.orElseThrow(null);
 	}
 }

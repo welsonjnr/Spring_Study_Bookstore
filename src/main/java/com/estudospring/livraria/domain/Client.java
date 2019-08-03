@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 
 import com.estudospring.livraria.domain.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 	
 @Entity
 public class Client implements Serializable {
@@ -32,7 +31,6 @@ public class Client implements Serializable {
 	private Integer period;
 	private Integer type;
 
-	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> address = new ArrayList<>();
 	
