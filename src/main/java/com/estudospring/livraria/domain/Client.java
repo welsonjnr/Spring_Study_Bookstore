@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Client implements Serializable {
 	private Integer period;
 	private Integer type;
 
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
 	
 	@ElementCollection
@@ -114,7 +115,7 @@ public class Client implements Serializable {
 		this.period = period;
 	}
 
-	public List<Address> getAdress() {
+	public List<Address> getAddress() {
 		return address;
 	}
 

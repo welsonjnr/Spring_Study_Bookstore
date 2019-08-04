@@ -76,18 +76,18 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		Client cli2 = new Client(null, "Maria", "15975364825", "Farmácia", "PUC", "maria@gmail.com", 1, UserType.STUDENT);
 		Client cli3 = new Client(null, "Marcos", "02153425899", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, UserType.TEACHER);
 		
+		Address adr1 = new Address(null, "JK", 15, "Centro", cli1, cit1);
+		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cli2, cit2);
+		Address adr3 = new Address(null, "Saião", 23, "Calibri", cli3, cit3);
+		
 		cli1.getPhones().addAll(Arrays.asList("927351525", "98502135"));
 		cli2.getPhones().addAll(Arrays.asList("987652535"));
 		cli3.getPhones().addAll(Arrays.asList("925314576", "987642534"));
 		
 		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
-			
-		Address adr1 = new Address(null, "JK", 15, "Centro", cit1, cli1);
-		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cit2, cli2);
-		Address adr3 = new Address(null, "Saião", 23, "Calibri", cit3, cli3);
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Loan loan1 = new Loan (null,sdf.parse("05/04/2019 10:30"), LoanStatus.BORROWED, bk1, cli1);

@@ -7,11 +7,6 @@
  * e retorna para o usuário
  */
 
-
-
-
-
-
 package com.estudospring.livraria.resources;
 
 import java.net.URI;
@@ -42,56 +37,62 @@ public class CategoryResource {
 	@Autowired
 	private CategoryService service;
 
-	/*ResponseEntity é utilizado para retorna um corpo completo em Http: Código de status, cabeçalho, e corpo. Por isso é utilizado para retornar totalmente uma requisição http da aplicação
-	Sendo genérica o qual é possivel usar qualquert tipo de resposta
-	*/
+	/*
+	 * ResponseEntity é utilizado para retorna um corpo completo em Http: Código de
+	 * status, cabeçalho, e corpo. Por isso é utilizado para retornar totalmente uma
+	 * requisição http da aplicação Sendo genérica o qual é possivel usar qualquert
+	 * tipo de resposta
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		
+
 		Category obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	/*A criação da CategoriaDTO serve para que e inclua o que deva ser buscado do objeto no banco de dados
-	@Valid é utilizado que a aplicação valide antes que envie para o Banco de dados
-	Esse método em resumo vai transformar um objeto Category em CategoryDTO 
-	E logo após vai pegar uma uri, com o caminho e construir um novo id e retornar em uma nova uri
-	*/
-	@RequestMapping(value="/{id}", method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDto){
+
+	/*
+	 * A criação da CategoriaDTO serve para que e inclua o que deva ser buscado do
+	 * objeto no banco de dados
+	 * 
+	 * @Valid é utilizado que a aplicação valide antes que envie para o Banco de
+	 * dados Esse método em resumo vai transformar um objeto Category em CategoryDTO
+	 * E logo após vai pegar uma uri, com o caminho e construir um novo id e
+	 * retornar em uma nova uri
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDto) {
 		Category obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		
 		return ResponseEntity.created(uri).build();
-		
 	}
-	
+
 	/*
-	 Estou pegando uma ResponseEntity vazia que vai receber uma CategoriaDTO e um id variável
-	 Então vou criar uma categoria obj e transforma-la em Dto
-	 Logo após, vou colocar o id
-	 E fazer a atualização com o método da classe CategoryService
-	 E construir uma ResponseEntity 
+	 * Estou pegando uma ResponseEntity vazia que vai receber uma CategoriaDTO e um
+	 * id variável Então vou criar uma categoria obj e transforma-la em Dto Logo
+	 * após, vou colocar o id E fazer a atualização com o método da classe
+	 * CategoryService E construir uma ResponseEntity
 	 */
-	@RequestMapping(value = "/{id}", method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDto, @PathVariable Integer id){
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDto, @PathVariable Integer id) {
 		Category obj = service.fromDTO(objDto);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	/*
-	 Pegando o id de um objeto e o colocando para ser deletado pelo método delete da classe Service
+	 * Pegando o id de um objeto e o colocando para ser deletado pelo método delete
+	 * da classe Service
 	 */
-	@RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<?> delete (@PathVariable Integer id){
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
-	public ResponseEntity<List<CategoryDTO>> findAll(){
+
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> list = service.findAll();
 		/*
 		 * Método muito interessante. Ele vai pegar uma lista de Categoria-> Transformar
@@ -102,22 +103,22 @@ public class CategoryResource {
 		List<CategoryDTO> listDto = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
-	
+
 	/*
-	 * Essa classe vai impedir o estouro da mémoria com pesquisas demais
-	 * Então se o usuário não inserir o parâmetros de pesquisa vai ter o padrão por causa do @ResquestParm
-	 * Vai transformar a categoria nas páginas criar o objDto e retornar a lista!
+	 * Essa classe vai impedir o estouro da mémoria com pesquisas demais Então se o
+	 * usuário não inserir o parâmetros de pesquisa vai ter o padrão por causa
+	 * do @ResquestParm Vai transformar a categoria nas páginas criar o objDto e
+	 * retornar a lista!
 	 */
-	public ResponseEntity<Page<CategoryDTO>> findPage(
-			@RequestParam(value="page", defaultValue = "0") Integer pages,
-			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value="value", defaultValue= "name") String orderBy,
-			@RequestParam(value="direction", defaultValue= "ASC") String direction){
-		
+	public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer pages,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "value", defaultValue = "name") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
 		Page<Category> list = service.findPage(pages, linesPerPage, orderBy, direction);
 		Page<CategoryDTO> listDto = list.map(obj -> new CategoryDTO(obj));
 		return ResponseEntity.ok().body(listDto);
-		
-	}	
+
+	}
 
 }
