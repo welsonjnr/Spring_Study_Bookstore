@@ -30,7 +30,8 @@ public class ClientResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDto){
-		
+		Client obj = client.fromDTO(objDto);
+		obj = client.
 		
 		
 	}

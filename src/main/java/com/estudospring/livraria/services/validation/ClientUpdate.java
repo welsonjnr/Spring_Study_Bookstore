@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 
 /*
- * Criação da nossa própria validação para a validação do CPF. Onde se aplicará a regra do negócio
+ * Criação da nossa própria validação para a atualização da classe Client no banco de dados. Onde se aplicará a regra do negócio
  * Classe Padrão
  */
 
