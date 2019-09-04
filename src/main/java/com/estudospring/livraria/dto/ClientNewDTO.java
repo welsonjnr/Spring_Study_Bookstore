@@ -2,6 +2,7 @@ package com.estudospring.livraria.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
@@ -10,6 +11,7 @@ import com.estudospring.livraria.services.validation.ClientInsert;
 
 //Vou precisar fazer uma nova anotação para que a classe ClientNewDTO, posso transformar um Client em ClientDTO. Para eu poder mandar para o banco de dados para ser feito o CRUD
 @ClientInsert
+//Data Transfer Object
 public class ClientNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -19,28 +21,25 @@ public class ClientNewDTO implements Serializable {
 	private String name;
 
 	@NotEmpty(message = "Required!")
+	
 	private String cpf;
 
 	@NotEmpty(message = "Required!")
+	@Email(message="Email Inválido")
 	private String email;
 
 	private String course;
 	private String institution;
 	private Integer period;
 
-	@NotEmpty(message = "Required!")
 	private Integer type;
 
-	@NotEmpty(message = "Required!")
 	private String avenue;
 
-	@NotEmpty(message = "Required!")
 	private Integer number;
 
-	@NotEmpty(message = "Required!")
 	private String bairro;
 
-	@NotEmpty(message = "Required!")
 	private String phone1;
 	private String phone2;
 	private String phone3;

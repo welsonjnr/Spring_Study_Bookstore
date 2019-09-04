@@ -16,7 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.estudospring.livraria.domain.enums.UserType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 	
 @Entity
 public class Client implements Serializable {
@@ -28,7 +28,9 @@ public class Client implements Serializable {
 	private Integer id;
 	private String name;
 	private String cpf;
-	private String course, institution, email;
+	private String course;
+	private String institution;
+	private String email;
 	private Integer period;
 	private Integer type;
 
@@ -39,7 +41,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="Phones")
 	private Set<String> phones = new HashSet<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy="client")
 	private List<Loan> loans = new ArrayList<>();
 	
@@ -56,7 +58,7 @@ public class Client implements Serializable {
 		this.institution = institution;
 		this.email = email;
 		this.period = period;
-		this.type = type.getCod();
+		this.type = (type==null) ? null : type.getCod();
 	}
 
 	public Integer getId() {

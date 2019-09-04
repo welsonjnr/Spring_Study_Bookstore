@@ -72,9 +72,10 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		
-		Client cli1 = new Client(null, "João", "12365498700", "ADM", "UNIMB", "joao@gmail.com", 3, UserType.STUDENT);
-		Client cli2 = new Client(null, "Maria", "15975364825", "Farmácia", "PUC", "maria@gmail.com", 1, UserType.STUDENT);
-		Client cli3 = new Client(null, "Marcos", "02153425899", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, UserType.TEACHER);
+		Client cli1 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, UserType.STUDENT);
+		Client cli2 = new Client(null, "Maria", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, UserType.STUDENT);
+		Client cli3 = new Client(null, "Marcos", "17981772001", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, UserType.TEACHER);
+		Client cli4 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, UserType.STUDENT);
 		
 		Address adr1 = new Address(null, "JK", 15, "Centro", cli1, cit1);
 		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cli2, cit2);
@@ -84,7 +85,7 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		cli2.getPhones().addAll(Arrays.asList("987652535"));
 		cli3.getPhones().addAll(Arrays.asList("925314576", "987642534"));
 		
-		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4));
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
 

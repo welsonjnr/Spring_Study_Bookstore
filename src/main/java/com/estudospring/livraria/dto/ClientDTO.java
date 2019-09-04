@@ -1,24 +1,30 @@
-package com.estudospring.livraria.dto;
+ package com.estudospring.livraria.dto;
+
+import java.io.Serializable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-
 import org.hibernate.validator.constraints.Length;
 
 import com.estudospring.livraria.domain.Client;
+import com.estudospring.livraria.services.validation.ClientUpdate;
+//Client Data Transfer Object
+@ClientUpdate
+public class ClientDTO implements Serializable {
 
-public class ClientDTO {
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	@NotEmpty(message="Required!")
 	@Length(min=5, max=80, message="Length must be between 5 and 80 characters!!")
 	private String name;
-	private String course;
-	private String instituiton;
 	@NotEmpty(message="Required!")
 	@Email(message="Invalid Email")
 	private String email;
+	private String course;
+	private String institution;
+	private Integer period;
 	
 	public ClientDTO() {
 	}
@@ -27,9 +33,10 @@ public class ClientDTO {
 		super();
 		this.id = objDto.getId();
 		this.name = objDto.getName();
-		this.course = objDto.getCourse();
-		this.instituiton = objDto.getInstitution();
 		this.email = objDto.getEmail();
+		this.course = objDto.getCourse();
+		this.institution = objDto.getInstitution();
+		this.period = objDto.getPeriod();
 	}
 
 	public Integer getId() {
@@ -48,6 +55,14 @@ public class ClientDTO {
 		this.name = name;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getCourse() {
 		return course;
 	}
@@ -56,21 +71,20 @@ public class ClientDTO {
 		this.course = course;
 	}
 
-	public String getInstituiton() {
-		return instituiton;
+	public String getInstitution() {
+		return institution;
 	}
 
-	public void setInstituiton(String instituiton) {
-		this.instituiton = instituiton;
+	public void setInstitution(String institution) {
+		this.institution = institution;
 	}
 
-	public String getEmail() {
-		return email;
+	public Integer getPeriod() {
+		return period;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPeriod(Integer period) {
+		this.period = period;
 	}
-	
-	
+
 }

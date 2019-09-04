@@ -1,5 +1,5 @@
 /*
- * Importante!!! 
+  * Importante!!! 
  * O usuário através da View vai entrar com a informação dos comandos que deseja executar
  * Logo após, a View vai mandar os comando para o REST que é esse aqui
  * E logo após vai para o Service 
@@ -18,10 +18,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,7 +46,7 @@ public class CategoryResource {
 	 * requisição http da aplicação Sendo genérica o qual é possivel usar qualquert
 	 * tipo de resposta
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 
 		Category obj = service.find(id);
@@ -59,7 +62,7 @@ public class CategoryResource {
 	 * E logo após vai pegar uma uri, com o caminho e construir um novo id e
 	 * retornar em uma nova uri
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO objDto) {
 		Category obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
@@ -73,7 +76,7 @@ public class CategoryResource {
 	 * após, vou colocar o id E fazer a atualização com o método da classe
 	 * CategoryService E construir uma ResponseEntity
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO objDto, @PathVariable Integer id) {
 		Category obj = service.fromDTO(objDto);
 		obj.setId(id);
@@ -85,13 +88,13 @@ public class CategoryResource {
 	 * Pegando o id de um objeto e o colocando para ser deletado pelo método delete
 	 * da classe Service
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(method=RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> list = service.findAll();
 		/*
