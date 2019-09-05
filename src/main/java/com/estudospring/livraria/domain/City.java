@@ -15,17 +15,17 @@ public class City implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private String cityName;
 	private String cep;
 	private String estado;
 		
 	public City() {
 	}
 
-	public City(Integer id, String name, String cep, String estado) {
+	public City(Integer id, String cityName, String cep, String estado) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.cityName = cityName;
 		this.cep = cep;
 		this.estado = estado;
 	}
@@ -38,12 +38,12 @@ public class City implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getCityName() {
+		return cityName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
 	public String getCep() {

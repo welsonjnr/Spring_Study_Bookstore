@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.dto.ClientDTO;
+import com.estudospring.livraria.dto.ClientNewDTO;
 import com.estudospring.livraria.services.ClientService;
 
 @RestController
@@ -49,8 +51,8 @@ public class ClientResource {
 	 */
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClientDTO objDto){
-		Client obj = clientServ.fromDTO(objDto);
+	public ResponseEntity<ClientNewDTO> insert(@Valid @RequestBody ClientNewDTO clientObjDto){
+		Client obj = clientServ.fromDTO(clientObjDto);
 		obj = clientServ.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{/id}").buildAndExpand(obj.getId()).toUri();
 		
