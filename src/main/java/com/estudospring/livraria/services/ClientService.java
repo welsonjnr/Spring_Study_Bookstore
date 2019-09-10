@@ -94,7 +94,7 @@ public class ClientService {
 	}
 	
 	private void updateData(Client newObj, Client obj) {
-		newObj.setName(obj.getName());
+		newObj.setNameClient(obj.getNameClient());
 		newObj.setEmail(obj.getEmail());
 		
 		if(obj.getCourse() != null) {

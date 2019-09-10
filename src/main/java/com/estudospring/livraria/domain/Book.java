@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
+import com.estudospring.livraria.domain.enums.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -25,6 +26,8 @@ public class Book implements Serializable {
 	private Integer id;
 	private String name, author;
 	private Integer edition;
+	private Integer bookStatus;
+	private Integer amount;
 
 	@ManyToMany
 	@JoinTable(name = "Book_Category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -37,12 +40,14 @@ public class Book implements Serializable {
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, Integer edition) {
+	public Book(Integer id, String name, String author, Integer edition, BookStatus bookStatus, Integer amount) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.edition = edition;
+		this.setBookStatus((bookStatus==null) ? null : bookStatus.getCod());
+		this.setAmount(amount);
 	}
 
 	public Integer getId() {
@@ -75,6 +80,22 @@ public class Book implements Serializable {
 
 	public void setEdition(Integer edition) {
 		this.edition = edition;
+	}
+	
+	public Integer getBookStatus() {
+		return bookStatus;
+	}
+
+	public void setBookStatus(Integer bookStatus) {
+		this.bookStatus = bookStatus;
+	}
+	
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 
 	public List<Category> getCategory() {

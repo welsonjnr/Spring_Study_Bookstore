@@ -26,7 +26,7 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
+	private String nameClient;
 	private String cpf;
 	private String course;
 	private String institution;
@@ -48,11 +48,11 @@ public class Client implements Serializable {
 	public Client() {
 	}
 	
-	public Client(Integer id, String name, String cpf, String course, String institution, String email, Integer period,
+	public Client(Integer id, String nameClient, String cpf, String course, String institution, String email, Integer period,
 			UserType type) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nameClient = nameClient;
 		this.cpf = cpf;
 		this.course = course;
 		this.institution = institution;
@@ -69,12 +69,13 @@ public class Client implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getNameClient() {
+		return nameClient;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNameClient(String nameClient) {
+		this.nameClient = nameClient;
 	}
 
 	public String getCpf() {
@@ -173,5 +174,4 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-
 }

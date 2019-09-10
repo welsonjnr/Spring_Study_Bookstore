@@ -14,6 +14,7 @@ import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
+import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.UserType;
 import com.estudospring.livraria.repositories.AddressRepository;
@@ -51,9 +52,9 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		Category cat2 = new Category(null, "Financias");
 		Category cat3 = new Category(null, "Esportes");
 		
-		Book bk1 = new Book(null, "ABCD", "João", 3);
-		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", 2);
-		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", 1);
+		Book bk1 = new Book(null, "ABCD", "João", 3, BookStatus.AVAILABLE, 2);
+		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", 2, BookStatus.BORROWED, 3);
+		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", 1, BookStatus.SINGLE, 1);
 		
 		cat1.getBook().addAll(Arrays.asList(bk1, bk2, bk3));
 		cat2.getBook().addAll(Arrays.asList(bk2));

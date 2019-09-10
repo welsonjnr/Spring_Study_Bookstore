@@ -32,7 +32,7 @@ public class ClientDTO implements Serializable {
 	public ClientDTO(Client objDto) {
 		super();
 		this.id = objDto.getId();
-		this.name = objDto.getName();
+		this.name = objDto.getNameClient();
 		this.email = objDto.getEmail();
 		this.course = objDto.getCourse();
 		this.institution = objDto.getInstitution();

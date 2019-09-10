@@ -7,8 +7,6 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.estudospring.livraria.services.validation.ClientInsert;
-
 //Vou precisar fazer uma nova anotação para que a classe ClientNewDTO, posso transformar um Client em ClientDTO. Para eu poder mandar para o banco de dados para ser feito o CRUD
 
 //Data Transfer Object
