@@ -15,21 +15,22 @@ public class LoanDTO implements Serializable {
 	private Integer status;
 	private Date loanDay;
 	
-	@NotEmpty(message="Required!")
-	private Integer BookId;
+	private Integer bookId;
 	private String nameBook;
-	@NotEmpty(message="Required!")
-	private Integer ClientId;
+	private Integer clientId;
 	private String nameClient;
 
+	public LoanDTO() {
+	}
+	
 	public LoanDTO(Loan objLoan) {
 		super();
 		setId(objLoan.getId());
 		status = objLoan.getStatus();
 		loanDay = objLoan.getLoanDay();
-		BookId = objLoan.getBook().getId();
+		bookId = objLoan.getBook().getId();
 		nameBook = objLoan.getBook().getName();
-		ClientId = objLoan.getClient().getId();
+		clientId = objLoan.getClient().getId();
 		nameClient = objLoan.getClient().getNameClient();
 	}
 
@@ -42,11 +43,11 @@ public class LoanDTO implements Serializable {
 	}
 
 	public Integer getBookId() {
-		return BookId;
+		return bookId;
 	}
 
 	public void setBookId(Integer bookId) {
-		BookId = bookId;
+		this.bookId = bookId;
 	}
 
 	public String getNameBook() {
@@ -58,11 +59,11 @@ public class LoanDTO implements Serializable {
 	}
 
 	public Integer getClientId() {
-		return ClientId;
+		return clientId;
 	}
 
 	public void setClientId(Integer clientId) {
-		ClientId = clientId;
+		this.clientId = clientId;
 	}
 
 	public String getNameClient() {
