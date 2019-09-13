@@ -3,8 +3,6 @@ package com.estudospring.livraria.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.estudospring.livraria.domain.Loan;
 
 public class LoanDTO implements Serializable {

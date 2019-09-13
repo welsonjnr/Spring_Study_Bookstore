@@ -38,7 +38,7 @@ public class BookService {
 	public Book update(Book book) {
 		Book bookUpdate = find(book.getId());
 		updateData(bookUpdate, book);
-		return bookUpdate;
+		return bookRepo.save(bookUpdate);
 	}
 	
 	public void delete(Integer idBook) {
@@ -62,11 +62,21 @@ public class BookService {
 	}
 	
 	private void updateData(Book bookUpdate, Book book) {
-		if(book != null) bookUpdate.setAuthor(book.getAuthor());
-		if(book != null) bookUpdate.setBookStatus(book.getBookStatus());
-		if(book != null) bookUpdate.setEdition(book.getEdition());
-		if(book != null) bookUpdate.setName(book.getName());
-		if(book != null) bookUpdate.setCategory(book.getCategory());
+		if(book.getAuthor() != null) {
+			bookUpdate.setAuthor(book.getAuthor());
+		}
+		if(book.getBookStatus() != null) {
+			bookUpdate.setBookStatus(book.getBookStatus());
+		}
+		if(book.getEdition() != null) {
+			bookUpdate.setEdition(book.getEdition());
+		}
+		if(book.getName() != null) {
+			bookUpdate.setName(book.getName());
+		}
+		if(book.getCategory() != null) {
+			bookUpdate.setCategory(book.getCategory());
+		}
 	}
 	
 }
