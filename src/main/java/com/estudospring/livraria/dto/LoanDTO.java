@@ -1,7 +1,7 @@
 package com.estudospring.livraria.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.estudospring.livraria.domain.Loan;
 
@@ -11,7 +11,8 @@ public class LoanDTO implements Serializable {
 	
 	private Integer id;
 	private Integer status;
-	private Date loanDay;
+	private LocalDate loanDay;
+	private LocalDate loanReturnDay;
 	
 	private Integer bookId;
 	private String nameBook;
@@ -26,6 +27,7 @@ public class LoanDTO implements Serializable {
 		setId(objLoan.getId());
 		status = objLoan.getStatus();
 		loanDay = objLoan.getLoanDay();
+		loanReturnDay = objLoan.getLoanDay().plusDays(14);
 		bookId = objLoan.getBook().getId();
 		nameBook = objLoan.getBook().getName();
 		clientId = objLoan.getClient().getId();
@@ -80,12 +82,20 @@ public class LoanDTO implements Serializable {
 		this.id = id;
 	}
 
-	public Date getLoanDay() {
+	public LocalDate getLoanDay() {
 		return loanDay;
 	}
 
-	public void setLoanDay(Date loanDay) {
+	public void setLoanDay(LocalDate loanDay) {
 		this.loanDay = loanDay;
+	}
+
+	public LocalDate getLoanReturnDay() {
+		return loanReturnDay;
+	}
+
+	public void setLoanReturnDay(LocalDate loanReturnDay) {
+		this.loanReturnDay = loanReturnDay;
 	}
 	
 }

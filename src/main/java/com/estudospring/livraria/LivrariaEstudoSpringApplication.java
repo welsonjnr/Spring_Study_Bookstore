@@ -1,6 +1,7 @@
 package com.estudospring.livraria;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,20 +53,13 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		Category cat2 = new Category(null, "Financias");
 		Category cat3 = new Category(null, "Esportes");
 		
-		Book bk1 = new Book(null, "ABCD", "João", 3, BookStatus.AVAILABLE, 2);
-		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", 2, BookStatus.BORROWED, 3);
-		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", 1, BookStatus.SINGLE, 1);
-		
-		cat1.getBook().addAll(Arrays.asList(bk1, bk2, bk3));
-		cat2.getBook().addAll(Arrays.asList(bk2));
-		cat3.getBook().addAll(Arrays.asList(bk3));
-		
-		bk1.getCategory().addAll(Arrays.asList(cat1));
-		bk2.getCategory().addAll(Arrays.asList(cat1, cat2));
-		bk3.getCategory().addAll(Arrays.asList(cat1, cat3));
+		Book bk1 = new Book(null, "ABCD", "João", 3, BookStatus.AVAILABLE, 2, cat2);
+		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", 2, BookStatus.BORROWED, 2,cat1);
+		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", 1, BookStatus.SINGLE, 1,cat2);
+		Book bk4 = new Book(null, "asdfsadfsf", "asdf", 3, BookStatus.AVAILABLE, 2, cat3);
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		bookRepository.saveAll(Arrays.asList(bk1, bk2, bk3));
+		bookRepository.saveAll(Arrays.asList(bk1, bk2, bk3, bk4));
 		
 		City cit1 = new City(null, "Goiás", "15675000", "GO");
 		City cit2 = new City(null, "Palmeiras", "76148000", "SP");
@@ -89,12 +83,10 @@ public class LivrariaEstudoSpringApplication implements CommandLineRunner {
 		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4));
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		
-		Loan loan1 = new Loan (null,sdf.parse("05/04/2019 10:30"), LoanStatus.BORROWED, bk1, cli1);
-		Loan loan2 = new Loan(null, sdf.parse("15/07/2019 07:20"), LoanStatus.CANCELED, bk2, cli1);
-		Loan loan3 = new Loan(null, sdf.parse("06/10/2019 12:45"), LoanStatus.LATE, bk3, cli3);
+	
+		Loan loan1 = new Loan (null, LocalDate.of(2019, Month.MARCH, 5) , LoanStatus.BORROWED, bk1, cli1);
+		Loan loan2 = new Loan (null, LocalDate.of(2019, Month.APRIL, 10), LoanStatus.LATE, bk2, cli1);
+		Loan loan3 = new Loan (null, LocalDate.of(2019, Month.JULY, 2), LoanStatus.CANCELED, bk3, cli3);
 		
 		cli1.getLoans().addAll(Arrays.asList(loan1, loan2));
 		cli3.getLoans().addAll(Arrays.asList(loan3));

@@ -1,16 +1,11 @@
 package com.estudospring.livraria.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Category implements Serializable {
@@ -21,10 +16,6 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy="category")
-	private List<Book> book = new ArrayList<>();
 	
 	public Category() {
 	}
@@ -49,14 +40,6 @@ public class Category implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Book> getBook() {
-		return book;
-	}
-
-	public void setBook(List<Book> book) {
-		this.book = book;
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.repositories.BookRepository;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;
 
@@ -19,6 +20,9 @@ public class BookService {
 	
 	@Autowired
 	private BookRepository bookRepo;
+	
+	@Autowired 
+	private CategoryService catServ;
 	
 	public Book find(Integer idBook) {
 		Optional<Book> book = bookRepo.findById(idBook);
@@ -32,6 +36,8 @@ public class BookService {
 	
 	public Book insert(Book book) {
 		book.setId(null);
+		book.setBookStatus(BookStatus.AVAILABLE);
+		book.setCategory(catServ.find(book.getCategory().getId()));
 		return bookRepo.save(book);	
 	}
 	

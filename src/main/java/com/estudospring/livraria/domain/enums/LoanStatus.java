@@ -5,7 +5,8 @@ public enum LoanStatus {
 	BORROWED (1, "Borrowed"),
 	RETURNED (2, "Returned"),
 	CANCELED(3, "Canceled"),
-	LATE (4, "Late");
+	RENOVATED(4, "Renovated"),
+	LATE (5, "Late");
 	
 	private int cod;
 	private String status;

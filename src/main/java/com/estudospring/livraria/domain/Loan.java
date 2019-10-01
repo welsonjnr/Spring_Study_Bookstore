@@ -1,7 +1,7 @@
 package com.estudospring.livraria.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
 
@@ -21,10 +22,13 @@ public class Loan implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private Date loanDay;
-	private Integer status;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	private LocalDate loanDay;
+//	@DateTimeFormat(pattern="dd/MM/yyyy")
+//private LocalDate loanReturnDay;
+	private Integer loanStatus;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="book_id")
 	private Book book;
 	
@@ -32,14 +36,17 @@ public class Loan implements Serializable {
 	@JoinColumn(name="client_id")
 	private Client client;
 	
+	
 	public Loan() {
 	}
 	
-	public Loan(Integer id, Date loanDay, LoanStatus status, Book book, Client client) {
+	public Loan(Integer id, LocalDate loanDay, LoanStatus loanStatus, Book book, Client client) {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
-		this.status = status.getCod();
+//		this.loanReturnDay = loanDay.plusDays(14);
+		//this.status = (status==null) ? null : status.getCod();
+		this.loanStatus = ((loanStatus==null) ? null : loanStatus.getCod());
 		this.book = book;
 		this.client = client;
 	}
@@ -52,20 +59,28 @@ public class Loan implements Serializable {
 		this.id = id;
 	}
 
-	public Date getLoanDay() {
+	public LocalDate getLoanDay() {
 		return loanDay;
 	}
 
-	public void setLoanDay(Date loanDay) {
+	public void setLoanDay(LocalDate loanDay) {
 		this.loanDay = loanDay;
 	}
-
-	public Integer getStatus() {
-		return status;
+/*
+	public LocalDate getLoanReturnDay() {
+		return loanReturnDay;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setLoanReturnDay(LocalDate loanReturnDay) {
+		this.loanReturnDay = this.loanDay.plusDays(14);
+	}
+*/
+	public LoanStatus getLoanStatus() {
+		return LoanStatus.toEnum(loanStatus);
+	}
+
+	public void setLoanStatus(LoanStatus loanStatus) {
+		this.loanStatus = loanStatus.getCod();
 	}
 	
 	public Book getBook() {
@@ -108,5 +123,5 @@ public class Loan implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }

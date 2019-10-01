@@ -9,9 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,30 +25,35 @@ public class Book implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name, author;
+	@NotEmpty(message="Required!")
+	private String name;
+	@NotEmpty(message="Required!")
+	private String author;
 	private Integer edition;
 	private Integer bookStatus;
+	@NotNull(message="Required!")	
 	private Integer amount;
 
-	@ManyToMany
-	@JoinTable(name = "Book_Category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> category = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="Category_id")
+	private Category category;
 
 	@JsonIgnore
-	@OneToOne(mappedBy = "book")
-	private Loan loan;
+	@OneToMany(mappedBy="client")
+	private List<Loan> loans = new ArrayList<>();
 
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, Integer edition, BookStatus bookStatus, Integer amount) {
+	public Book(Integer id, String name, String author, Integer edition, BookStatus bookStatus, Integer amount, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.edition = edition;
-		this.setBookStatus((bookStatus==null) ? null : bookStatus.getCod());
+		this.bookStatus = ((bookStatus==null) ? null : bookStatus.getCod());
 		this.setAmount(amount);
+		this.category = category;
 	}
 
 	public Integer getId() {
@@ -82,12 +88,17 @@ public class Book implements Serializable {
 		this.edition = edition;
 	}
 	
-	public Integer getBookStatus() {
-		return bookStatus;
+	public BookStatus getBookStatus() {
+		return BookStatus.toEnum(bookStatus);
 	}
-
-	public void setBookStatus(Integer bookStatus) {
-		this.bookStatus = bookStatus;
+	
+	public void setBookStatus(BookStatus bookStatus) {
+		if(getAmount().equals(1)) {
+		this.bookStatus = BookStatus.SINGLE.getCod();
+	}
+		else {
+			this.bookStatus = bookStatus.getCod();
+		}
 	}
 	
 	public Integer getAmount() {
@@ -98,20 +109,20 @@ public class Book implements Serializable {
 		this.amount = amount;
 	}
 
-	public List<Category> getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<Category> category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	public Loan getLoan() {
-		return loan;
+	public List<Loan> getLoans() {
+		return loans;
 	}
 
-	public void setLoan(Loan loan) {
-		this.loan = loan;
+	public void setLoans(List<Loan> loans) {
+		this.loans = loans;
 	}
 
 	@Override

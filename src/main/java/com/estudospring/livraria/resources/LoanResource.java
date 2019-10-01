@@ -32,7 +32,7 @@ public class LoanResource {
 	private LoanService loanServ;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> find (@PathVariable Integer id){
+	public ResponseEntity<Loan> find (@PathVariable Integer id){
 		Loan obj = loanServ.find(id);
 		
 		return ResponseEntity.ok().body(obj);
@@ -45,10 +45,17 @@ public class LoanResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value="/{id}")
-	public ResponseEntity<Loan> update(@Valid @RequestBody Loan loanUpdate, @PathVariable Integer id){
-		loanUpdate.setId(id);
-		loanUpdate = loanServ.update(loanUpdate);
+	@PutMapping(value="/renovated/{id}")
+	public ResponseEntity<Loan> renovatedLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+		loan.setId(id);
+		loan = loanServ.renovatedStatus(loan);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value="/returned/{id}")
+	public ResponseEntity<Loan> returnedBook(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+		loan.setId(id);
+		loan = loanServ.returnedBook(loan);
 		return ResponseEntity.noContent().build();
 	}
 	
