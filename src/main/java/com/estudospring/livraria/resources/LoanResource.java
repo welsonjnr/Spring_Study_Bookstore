@@ -45,17 +45,24 @@ public class LoanResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value="/renovated/{id}")
-	public ResponseEntity<Loan> renovatedLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+	@PutMapping(value="/renew/{id}")
+	public ResponseEntity<Loan> renewLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
 		loan.setId(id);
-		loan = loanServ.renovatedStatus(loan);
+		loan = loanServ.renewStatus(loan);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value="/returned/{id}")
+	@PutMapping(value="/return/{id}")
 	public ResponseEntity<Loan> returnedBook(@Valid @RequestBody Loan loan, @PathVariable Integer id){
 		loan.setId(id);
-		loan = loanServ.returnedBook(loan);
+		loan = loanServ.returnBook(loan);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value="/cancel/{id}")
+	public ResponseEntity<Loan> cancelLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+		loan.setId(id);
+		loan = loanServ.cancelLoan(loan);
 		return ResponseEntity.noContent().build();
 	}
 	

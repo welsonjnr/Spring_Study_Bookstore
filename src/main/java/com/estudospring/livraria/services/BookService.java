@@ -11,7 +11,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.enums.BookStatus;
+import com.estudospring.livraria.dto.BookDTO;
 import com.estudospring.livraria.repositories.BookRepository;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;
 
@@ -83,6 +85,10 @@ public class BookService {
 		if(book.getCategory() != null) {
 			bookUpdate.setCategory(book.getCategory());
 		}
+	}
+	
+	public Book fromDTO(BookDTO objDto) {	
+		return new Book(objDto.getId(), objDto.getName(), objDto.getAuthor(), objDto.getEdition(), objDto.getAmount(), catServ.find(objDto.getCategory()));
 	}
 	
 }

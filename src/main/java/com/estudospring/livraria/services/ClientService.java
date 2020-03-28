@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.estudospring.livraria.domain.Address;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
-import com.estudospring.livraria.domain.enums.UserType;
+import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.dto.ClientDTO;
 import com.estudospring.livraria.dto.ClientNewDTO;
 import com.estudospring.livraria.repositories.AddressRepository;
@@ -50,7 +50,7 @@ public class ClientService {
 	}
 
 	public Client fromDTO(ClientNewDTO objDto) {
-		Client cli = new Client(null, objDto.getName(), objDto.getCpf(), objDto.getCourse(), objDto.getInstitution(), objDto.getEmail(), objDto.getPeriod(), UserType.toEnum(objDto.getType()));
+		Client cli = new Client(null, objDto.getName(), objDto.getCpf(), objDto.getCourse(), objDto.getInstitution(), objDto.getEmail(), objDto.getPeriod(), StatusClient.toEnum(objDto.getType()));
 		City city = new City(objDto.getCityId(), null, null, null);
 		Address adr = new Address(null, objDto.getAvenue(), objDto.getNumber(), objDto.getBairro(), cli, city);
 		cli.getAddress().add(adr);

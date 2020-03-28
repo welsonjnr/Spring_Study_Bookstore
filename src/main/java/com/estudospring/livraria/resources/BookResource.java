@@ -3,6 +3,7 @@ package com.estudospring.livraria.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.dto.BookDTO;
 import com.estudospring.livraria.services.BookService;
 
 @RestController
@@ -36,23 +38,29 @@ public class BookResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Book> insert(@Valid @RequestBody Book book){
+	@Transactional
+	public ResponseEntity<BookDTO> insert(@Valid @RequestBody BookDTO bookDto){
+		Book book = bookServ.fromDTO(bookDto);
 		book = bookServ.insert(book);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(new BookDTO(book));
 	}
 
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody Book bookUpdate, @PathVariable Integer id){
-		bookUpdate.setId(id);
-		bookUpdate = bookServ.update(bookUpdate);
+	@Transactional
+	public ResponseEntity<Void> update(@Valid @RequestBody BookDTO bookUpdate, @PathVariable Integer id){
+		Book book = bookServ.fromDTO(bookUpdate);
+		book.setId(id);
+		book  = bookServ.update(book);
+	
 		return ResponseEntity.noContent().build();
 	}
 	
 	@DeleteMapping(value="/{id}")
+	@Transactional
 	public ResponseEntity<?> delete(@PathVariable Integer id){
 		bookServ.delete(id);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping

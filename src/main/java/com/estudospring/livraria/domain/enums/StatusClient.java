@@ -1,14 +1,14 @@
 package com.estudospring.livraria.domain.enums;
 
-public enum UserType {
+public enum StatusClient {
 
-	STUDENT(1, "Estudante"),
-	TEACHER(2, "Professor");
+	RELEASED(1, "Loan released"),
+	PENDING(2, "Loan Pending");
 	
 	private int cod;
 	private String descricao;
 	
-	private UserType(int cod, String descricao) {
+	private StatusClient(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -21,12 +21,12 @@ public enum UserType {
 		return descricao;
 	}
 	
-	public static UserType toEnum(Integer cod) {
+	public static StatusClient toEnum(Integer cod) {
 		if(cod == null) {
 			return null;
 		}
 		
-		for(UserType x: UserType.values()) {
+		for(StatusClient x: StatusClient.values()) {
 			if(cod.equals(x.getCod())) {
 				return x;
 			}

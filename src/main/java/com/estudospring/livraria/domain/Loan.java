@@ -24,8 +24,8 @@ public class Loan implements Serializable {
 	private Integer id;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate loanDay;
-//	@DateTimeFormat(pattern="dd/MM/yyyy")
-//private LocalDate loanReturnDay;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	private LocalDate loanReturnDay;
 	private Integer loanStatus;
 	
 	@ManyToOne
@@ -44,8 +44,6 @@ public class Loan implements Serializable {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
-//		this.loanReturnDay = loanDay.plusDays(14);
-		//this.status = (status==null) ? null : status.getCod();
 		this.loanStatus = ((loanStatus==null) ? null : loanStatus.getCod());
 		this.book = book;
 		this.client = client;
@@ -123,5 +121,33 @@ public class Loan implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Empréstimo = ");
+		builder.append(" Feito no dia: ");
+		builder.append(loanDay);
+		builder.append(", Status de empréstimo: ");
+		builder.append(getLoanStatus());
+		builder.append("| Livro = ");
+		builder.append(book.getName());
+		builder.append(" , Edição: ");
+		builder.append(book.getEdition());
+		builder.append(", Autor: ");
+		builder.append(book.getAuthor());
+		builder.append("| Cliente = ");
+		builder.append(client.getNameClient());
+		builder.append(", CPF: ");
+		builder.append(client.getCpf());
+		builder.append(", Estudante da instituição: ");
+		builder.append(client.getInstitution());
+		builder.append(", Curso: ");
+		builder.append(client.getCourse());
+		builder.append(" ");
+		return builder.toString();
+	}
+	
+	
 	
 }

@@ -12,7 +12,7 @@ public class LoanDTO implements Serializable {
 	private Integer id;
 	private Integer status;
 	private LocalDate loanDay;
-	private LocalDate loanReturnDay;
+	//private LocalDate loanReturnDay;
 	
 	private Integer bookId;
 	private String nameBook;
@@ -25,9 +25,9 @@ public class LoanDTO implements Serializable {
 	public LoanDTO(Loan objLoan) {
 		super();
 		setId(objLoan.getId());
-		status = objLoan.getStatus();
+		status = objLoan.getLoanStatus().getCod();
 		loanDay = objLoan.getLoanDay();
-		loanReturnDay = objLoan.getLoanDay().plusDays(14);
+		//loanReturnDay = objLoan.getLoanDay().plusDays(14);
 		bookId = objLoan.getBook().getId();
 		nameBook = objLoan.getBook().getName();
 		clientId = objLoan.getClient().getId();
@@ -89,7 +89,7 @@ public class LoanDTO implements Serializable {
 	public void setLoanDay(LocalDate loanDay) {
 		this.loanDay = loanDay;
 	}
-
+/*
 	public LocalDate getLoanReturnDay() {
 		return loanReturnDay;
 	}
@@ -97,5 +97,5 @@ public class LoanDTO implements Serializable {
 	public void setLoanReturnDay(LocalDate loanReturnDay) {
 		this.loanReturnDay = loanReturnDay;
 	}
-	
+*/
 }

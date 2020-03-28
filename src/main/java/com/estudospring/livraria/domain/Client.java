@@ -15,7 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.estudospring.livraria.domain.enums.UserType;
+import com.estudospring.livraria.domain.enums.StatusClient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 	
 @Entity
@@ -32,7 +32,7 @@ public class Client implements Serializable {
 	private String institution;
 	private String email;
 	private Integer period;
-	private Integer type;
+	private Integer statusClient;
 
 	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Client implements Serializable {
 	}
 	
 	public Client(Integer id, String nameClient, String cpf, String course, String institution, String email, Integer period,
-			UserType type) {
+			StatusClient statusClient) {
 		super();
 		this.id = id;
 		this.nameClient = nameClient;
@@ -58,7 +58,7 @@ public class Client implements Serializable {
 		this.institution = institution;
 		this.email = email;
 		this.period = period;
-		this.type = (type==null) ? null : type.getCod();
+		this.statusClient = (statusClient==null) ? null : statusClient.getCod();
 	}
 
 	public Integer getId() {
@@ -134,12 +134,12 @@ public class Client implements Serializable {
 		this.phones = phones;
 	}
 
-	public UserType getType() {
-		return UserType.toEnum(type);
+	public StatusClient getStatusClient() {
+		return StatusClient.toEnum(statusClient);
 	}
 
-	public void setType(UserType type) {
-		this.type = type.getCod();
+	public void setStatusClient(StatusClient statusClient) {
+		this.statusClient = statusClient.getCod();
 	}
 	
 	public List<Loan> getLoans() {

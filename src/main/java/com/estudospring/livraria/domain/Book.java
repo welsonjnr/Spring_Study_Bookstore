@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +32,8 @@ public class Book implements Serializable {
 	@NotEmpty(message="Required!")
 	private String author;
 	private Integer edition;
-	private Integer bookStatus;
+	@Enumerated(EnumType.STRING)
+	private BookStatus bookStatus = BookStatus.AVAILABLE;
 	@NotNull(message="Required!")	
 	private Integer amount;
 
@@ -45,14 +48,13 @@ public class Book implements Serializable {
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, Integer edition, BookStatus bookStatus, Integer amount, Category category) {
+	public Book(Integer id, String name, String author, Integer edition, Integer amount, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.edition = edition;
-		this.bookStatus = ((bookStatus==null) ? null : bookStatus.getCod());
-		this.setAmount(amount);
+		this.amount = amount;
 		this.category = category;
 	}
 
@@ -89,18 +91,16 @@ public class Book implements Serializable {
 	}
 	
 	public BookStatus getBookStatus() {
-		return BookStatus.toEnum(bookStatus);
+		return bookStatus;
 	}
-	
+
 	public void setBookStatus(BookStatus bookStatus) {
-		if(getAmount().equals(1)) {
-		this.bookStatus = BookStatus.SINGLE.getCod();
-	}
-		else {
-			this.bookStatus = bookStatus.getCod();
+		if(this.amount == 1) {
+		this.bookStatus = BookStatus.SINGLE;
+			}
+		this.bookStatus = bookStatus;
 		}
-	}
-	
+
 	public Integer getAmount() {
 		return amount;
 	}

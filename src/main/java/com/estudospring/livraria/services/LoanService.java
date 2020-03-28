@@ -1,10 +1,7 @@
 package com.estudospring.livraria.services;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,12 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
+import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.repositories.LoanRepository;
-import com.estudospring.livraria.services.exceptions.BookIsNotAvailableForRenewal;
 import com.estudospring.livraria.services.exceptions.BookUnavailableForLoan;
+import com.estudospring.livraria.services.exceptions.CustomerWithOpenLoan;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -42,50 +42,50 @@ public class LoanService {
 		return obj.orElseThrow(null);
 	}
 	
-	@Transactional
-	public Loan insert(Loan obj) {
-		obj.setId(null);
-		obj.setLoanDay(LocalDate.now());
-//	obj.setLoanReturnDay(obj.getLoanDay());
-		obj.setLoanStatus(LoanStatus.BORROWED);
-		obj.setClient(servCli.find(obj.getClient().getId()));
-		obj.setBook(servBook.find(obj.getBook().getId()));
+
+	public Loan insert(Loan loan) {
+		loan.setId(null);
+		loan.setClient(validationClient(loan.getClient().getId()));
 		
-		if(obj.getBook().getBookStatus().equals(BookStatus.SINGLE) || obj.getBook().getBookStatus().equals(BookStatus.BORROWED)) {
-			throw new BookUnavailableForLoan("O livro é unico ou já esta emprestado");
+		Client cli = servCli.find(loan.getClient().getId());
+		cli.setStatusClient(StatusClient.PENDING);
+		servCli.update(cli);
+		
+		loan.setBook(validationBook(loan.getBook().getId()));
+		Book book = servBook.find(loan.getClient().getId());
+		book.setAmount(book.getAmount() -1);
+		if(book.getAmount() == 1) {
+			book.setBookStatus(BookStatus.SINGLE);
 		}
+		servBook.update(book);
 		
-		obj.getBook().setAmount(obj.getBook().getAmount() - 1);
-		
-		if(obj.getBook().getAmount().equals(1)) {
-			obj.getBook().setBookStatus(BookStatus.SINGLE);
-			}
-		
-		return repoLoan.save(obj);
+		return repoLoan.save(loan);
 		
 	}
 	
-	public Loan returnedBook(Loan loan) {
-		loan = find(loan.getId());
-		if(loan.getLoanStatus() != LoanStatus.CANCELED) {
-			loan.setLoanStatus(LoanStatus.RETURNED);
-		}
-		loan.getBook().setAmount(+ 1);
-		loan.getBook().setBookStatus(BookStatus.AVAILABLE);
-		return repoLoan.save(loan);
+	public Loan renewal(Loan loan) {
+		Loan loanRenewal = find(loan.getId());
+		loanRenewal.setLoanStatus(LoanStatus.RENOVATED);
+		return repoLoan.save(loanRenewal);
 	}
+	
+	public Loan returned(Loan loan) {
+		Loan loanReturned = find(loan.getId());
+		loanReturned.setLoanStatus(LoanStatus.RETURNED);
+		Book book = servBook.find(loan.getBook().getId());
+		book.setAmount(book.getAmount() + 1);
+		if(book.getAmount() > 1) {
+			book.setBookStatus(BookStatus.AVAILABLE);
+		}
+		servBook.update(book);
+		
+		Client client = servCli.find(loan.getClient().getId());
+		client.setStatusClient(StatusClient.RELEASED);
+		servCli.update(client);
 
-	public Loan renovatedStatus(Loan loan) {
-		loan = find(loan.getId());
-		if(loan.getLoanStatus() == LoanStatus.LATE || loan.getLoanStatus() == LoanStatus.BORROWED && loan.getLoanStatus() != LoanStatus.RETURNED) {
-			loan.setLoanStatus(LoanStatus.RENOVATED);
-			loan.setLoanDay(LocalDate.now());
-		}
-		else{
-			throw new BookIsNotAvailableForRenewal("O livro já foi devolvido ou o Empréstimo foi Cancelado!");
-		}
-		return repoLoan.save(loan);
+		return repoLoan.save(loanReturned);
 	}
+	
 	
 	public void delete(Integer id) {
 		find(id);
@@ -106,4 +106,27 @@ public class LoanService {
 		return repoLoan.findAll(pageRequest);
 	}
 
+	public Client validationClient(Integer id) {
+		Client cli = servCli.find(id);
+		if(cli.getStatusClient() == StatusClient.PENDING) {
+			throw new CustomerWithOpenLoan("O usuário está com um empréstimo pendente!");
+		}
+		return cli;
+	}
+	
+	public Book validationBook(Integer id) {
+		Book book = servBook.find(id);
+		
+		if(book.getAmount() <= 1) {
+			throw new BookUnavailableForLoan("O Livro não pode ser Emprestado");
+		}
+		
+		if(book.getBookStatus() == BookStatus.SINGLE || book.getBookStatus() == BookStatus.BORROWED) {
+			throw new BookUnavailableForLoan("O Livro não pode ser Emprestado");
+		}
+		
+		return book;
+		 	
+	}
+	
 }
