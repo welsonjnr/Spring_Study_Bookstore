@@ -66,7 +66,7 @@ public class ClientResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<ClientDTO>> findAll(){
 		List<Client> list = clientServ.findAll();
 		/*
@@ -90,6 +90,7 @@ public class ClientResource {
 		 * "value" Que no caso seria "page". Page é um tipo especial para pegar o
 		 * quantidade de objetos por páginas. Para não sobrecarregar o sistema.
 		 */
+		@GetMapping(value="/find/page")
 		public ResponseEntity<Page<ClientDTO>> findPage(
 				// RequestParam: Serve para colocar as informações como padrão. Caso não
 				// informada pelo usuário

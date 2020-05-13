@@ -62,7 +62,6 @@ public class BookResource {
 		bookServ.delete(id);
 		return ResponseEntity.ok().build();
 	}
-	
 	@GetMapping
 	public ResponseEntity<List<Book>> findAll(){
 		List<Book> list = bookServ.findAll();
@@ -70,6 +69,7 @@ public class BookResource {
 		
 	}
 	
+	@GetMapping(value="/find/page")
 	public ResponseEntity<Page<Book>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,

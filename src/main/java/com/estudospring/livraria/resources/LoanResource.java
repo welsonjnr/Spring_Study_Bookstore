@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,38 +49,34 @@ public class LoanResource {
 	@PutMapping(value="/renew/{id}")
 	public ResponseEntity<Loan> renewLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
 		loan.setId(id);
-		loan = loanServ.renewStatus(loan);
+		loan = loanServ.renewal(loan);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping(value="/return/{id}")
 	public ResponseEntity<Loan> returnedBook(@Valid @RequestBody Loan loan, @PathVariable Integer id){
 		loan.setId(id);
-		loan = loanServ.returnBook(loan);
+		loan = loanServ.returned(loan);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PutMapping(value="/cancel/{id}")
-	public ResponseEntity<Loan> cancelLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
-		loan.setId(id);
-		loan = loanServ.cancelLoan(loan);
-		return ResponseEntity.noContent().build();
-	}
-	
+	/*
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		loanServ.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	*/
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@GetMapping
 	public ResponseEntity<List<LoanDTO>> findAll(){
 		List<Loan> list = loanServ.findAll();
 		
 		List<LoanDTO> listDto = list.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
-	
+
+	@GetMapping(value="/find/page")
 	public ResponseEntity<Page<LoanDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,

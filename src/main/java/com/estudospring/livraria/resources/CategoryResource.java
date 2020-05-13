@@ -93,7 +93,7 @@ public class CategoryResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
+	
 	@GetMapping
 	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> list = service.findAll();
@@ -113,6 +113,7 @@ public class CategoryResource {
 	 * do @ResquestParm Vai transformar a categoria nas páginas criar o objDto e
 	 * retornar a lista!
 	 */
+	@GetMapping(value="/find/page")
 	public ResponseEntity<Page<CategoryDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer pages,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "value", defaultValue = "name") String orderBy,
