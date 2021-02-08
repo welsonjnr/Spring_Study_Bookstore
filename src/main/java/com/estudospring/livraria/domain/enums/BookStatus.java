@@ -2,7 +2,7 @@ package com.estudospring.livraria.domain.enums;
 
 public enum BookStatus {
 
-	AVAILABLE(1, "Available"), BORROWED(2, "Borrowed"), SINGLE(3, "Single");
+	DISPONIVEL(1, "Disponivel"), EMPRESTADO(2, "Emprestado"), UNICO(3, "Unico");
 
 	private int cod;
 	private String status;

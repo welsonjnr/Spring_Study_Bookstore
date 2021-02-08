@@ -39,6 +39,15 @@ public class ClientService {
 		return obj.orElse(null);
 	}
 
+	public Client findByNameClient(String nameClient) {
+		Client obj = repoCli.findByNameClient(nameClient);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
+		}
+			return obj;
+		}
+	
 	/*
 	 * Estou pegando um objeto ClientNewDto e colocando as informações dentro dele
 	 * Como a implementação vai ser feita depois do objeto for instaciado, não vou

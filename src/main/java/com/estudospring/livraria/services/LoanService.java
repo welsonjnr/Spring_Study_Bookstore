@@ -48,14 +48,14 @@ public class LoanService {
 		loan.setClient(validationClient(loan.getClient().getId()));
 		
 		Client cli = servCli.find(loan.getClient().getId());
-		cli.setStatusClient(StatusClient.PENDING);
+		cli.setStatusClient(StatusClient.PENDENTE);
 		servCli.update(cli);
 		
 		loan.setBook(validationBook(loan.getBook().getId()));
 		Book book = servBook.find(loan.getClient().getId());
 		book.setAmount(book.getAmount() -1);
 		if(book.getAmount() == 1) {
-			book.setBookStatus(BookStatus.SINGLE);
+			book.setBookStatus(BookStatus.UNICO);
 		}
 		servBook.update(book);
 		
@@ -75,12 +75,12 @@ public class LoanService {
 		Book book = servBook.find(loan.getBook().getId());
 		book.setAmount(book.getAmount() + 1);
 		if(book.getAmount() > 1) {
-			book.setBookStatus(BookStatus.AVAILABLE);
+			book.setBookStatus(BookStatus.DISPONIVEL);
 		}
 		servBook.update(book);
 		
 		Client client = servCli.find(loan.getClient().getId());
-		client.setStatusClient(StatusClient.RELEASED);
+		client.setStatusClient(StatusClient.DISPONIVEL);
 		servCli.update(client);
 
 		return repoLoan.save(loanReturned);
@@ -108,7 +108,7 @@ public class LoanService {
 
 	public Client validationClient(Integer id) {
 		Client cli = servCli.find(id);
-		if(cli.getStatusClient() == StatusClient.PENDING) {
+		if(cli.getStatusClient() == StatusClient.PENDENTE) {
 			throw new CustomerWithOpenLoan("O usuário está com um empréstimo pendente!");
 		}
 		return cli;
@@ -121,7 +121,7 @@ public class LoanService {
 			throw new BookUnavailableForLoan("O Livro não pode ser Emprestado");
 		}
 		
-		if(book.getBookStatus() == BookStatus.SINGLE || book.getBookStatus() == BookStatus.BORROWED) {
+		if(book.getBookStatus() == BookStatus.UNICO || book.getBookStatus() == BookStatus.EMPRESTADO) {
 			throw new BookUnavailableForLoan("O Livro não pode ser Emprestado");
 		}
 		

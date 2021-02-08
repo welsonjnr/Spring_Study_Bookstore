@@ -26,7 +26,7 @@ public class Loan implements Serializable {
 	private LocalDate loanDay;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate loanReturnDay;
-	private Integer loanStatus;
+	private LoanStatus loanStatus;
 	
 	@ManyToOne
 	@JoinColumn(name="book_id")
@@ -44,7 +44,7 @@ public class Loan implements Serializable {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
-		this.loanStatus = ((loanStatus==null) ? null : loanStatus.getCod());
+		this.loanStatus = loanStatus;
 		this.book = book;
 		this.client = client;
 	}
@@ -73,16 +73,19 @@ public class Loan implements Serializable {
 		this.loanReturnDay = this.loanDay.plusDays(14);
 	}
 */
-	public LoanStatus getLoanStatus() {
-		return LoanStatus.toEnum(loanStatus);
-	}
-
-	public void setLoanStatus(LoanStatus loanStatus) {
-		this.loanStatus = loanStatus.getCod();
-	}
+	
+	
 	
 	public Book getBook() {
 		return book;
+	}
+
+	public LoanStatus getLoanStatus() {
+		return loanStatus;
+	}
+
+	public void setLoanStatus(LoanStatus loanStatus) {
+		this.loanStatus = loanStatus;
 	}
 
 	public void setBook(Book book) {

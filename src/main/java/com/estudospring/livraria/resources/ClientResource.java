@@ -40,6 +40,14 @@ public class ClientResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value = "/findClientName/{nameClient}")
+	public ResponseEntity<Client> findByNameClient(@PathVariable String nameClient){
+		Client obj = clientServ.findByNameClient(nameClient);
+		
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	
 	/*
 	 * Este método vai ser requisitado para o POST(Registro de algo no banco de dados)
 	 * Vai pegar uma ResponseEntity vazia e vai requisitar um clientNewDto

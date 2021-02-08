@@ -11,10 +11,12 @@ public class BookDTO {
 	private Integer id;
 	private String name;
 	private String author;
-	private Integer edition;
+	private String edition;
 	private BookStatus bookStatus;
 	private Integer amount;
 	private Integer category;
+	
+	public BookDTO() {}
 	
 	public BookDTO(Book book) {
 		this.id = book.getId();
@@ -50,11 +52,11 @@ public class BookDTO {
 		this.author = author;
 	}
 
-	public Integer getEdition() {
+	public String getEdition() {
 		return edition;
 	}
 
-	public void setEdition(Integer edition) {
+	public void setEdition(String edition) {
 		this.edition = edition;
 	}
 

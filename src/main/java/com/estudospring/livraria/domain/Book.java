@@ -31,9 +31,9 @@ public class Book implements Serializable {
 	private String name;
 	@NotEmpty(message="Required!")
 	private String author;
-	private Integer edition;
+	private String edition;
 	@Enumerated(EnumType.STRING)
-	private BookStatus bookStatus = BookStatus.AVAILABLE;
+	private BookStatus bookStatus;
 	@NotNull(message="Required!")	
 	private Integer amount;
 
@@ -48,12 +48,13 @@ public class Book implements Serializable {
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, Integer edition, Integer amount, Category category) {
+	public Book(Integer id, String name, String author, String edition, BookStatus bookStatus,Integer amount, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.edition = edition;
+		this.bookStatus = bookStatus;
 		this.amount = amount;
 		this.category = category;
 	}
@@ -82,11 +83,11 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 
-	public Integer getEdition() {
+	public String getEdition() {
 		return edition;
 	}
 
-	public void setEdition(Integer edition) {
+	public void setEdition(String edition) {
 		this.edition = edition;
 	}
 	
@@ -96,7 +97,7 @@ public class Book implements Serializable {
 
 	public void setBookStatus(BookStatus bookStatus) {
 		if(this.amount == 1) {
-		this.bookStatus = BookStatus.SINGLE;
+		this.bookStatus = BookStatus.UNICO;
 			}
 		this.bookStatus = bookStatus;
 		}

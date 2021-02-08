@@ -2,8 +2,8 @@ package com.estudospring.livraria.domain.enums;
 
 public enum StatusClient {
 
-	RELEASED(1, "Loan released"),
-	PENDING(2, "Loan Pending");
+	DISPONIVEL(1, "Emprestimo Disponível"),
+	PENDENTE(2, "Emprestimo Pendente");
 	
 	private int cod;
 	private String descricao;

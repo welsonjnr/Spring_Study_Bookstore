@@ -13,7 +13,7 @@ import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
-import com.estudospring.livraria.domain.UserLogin;
+//import com.estudospring.livraria.domain.UserLogin;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.StatusClient;
@@ -23,7 +23,7 @@ import com.estudospring.livraria.repositories.CategoryRepository;
 import com.estudospring.livraria.repositories.CityRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
 import com.estudospring.livraria.repositories.LoanRepository;
-import com.estudospring.livraria.repositories.UserLoginRepository;
+//import com.estudospring.livraria.repositories.UserLoginRepository;
 
 @Service
 public class DBService {
@@ -41,23 +41,23 @@ public class DBService {
 	@Autowired
 	private LoanRepository loanRepository;
 	
-	@Autowired
-	private UserLoginRepository userLoginRepo;
+	//@Autowired
+//	private UserLoginRepository userLoginRepo;
 	
 	public void instatiateTestDatabase() {
 		
-		UserLogin userLogin = new UserLogin(null, "joão", "a@gmail.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq");
+//		UserLogin userLogin = new UserLogin(null, "joão", "a@gmail.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq");
 		
-		userLoginRepo.save(userLogin);
+	//	userLoginRepo.save(userLogin);
 		
 		Category cat1 = new Category(null, "Literatura");
 		Category cat2 = new Category(null, "Financias");
 		Category cat3 = new Category(null, "Esportes");
 		
-		Book bk1 = new Book(null, "ABCD", "João", 3, 2, cat2);
-		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", 2, 2,cat1);
-		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", 1, 1,cat2);
-		Book bk4 = new Book(null, "asdfsadfsf", "asdf", 3, 2, cat3);
+		Book bk1 = new Book(null, "ABCD", "João", "1° Edição SP", BookStatus.DISPONIVEL, 2, cat2);
+		Book bk2 = new Book(null, "Fique Rico", "Tio Huli", "Edição BR Limitada",BookStatus.EMPRESTADO, 2,cat1);
+		Book bk3 = new Book(null, "No céu tem Pão?", "Desbersval", "2° GO",BookStatus.UNICO, 1,cat2);
+		Book bk4 = new Book(null, "asdfsadfsf", "asdf", "Limited 3°",BookStatus.DISPONIVEL, 2, cat3);
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		bookRepository.saveAll(Arrays.asList(bk1, bk2, bk3, bk4));
@@ -68,10 +68,10 @@ public class DBService {
 		
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		
-		Client cli1 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.PENDING);
-		Client cli2 = new Client(null, "Maria", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, StatusClient.PENDING);
-		Client cli3 = new Client(null, "Marcos", "17981772001", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, StatusClient.PENDING);
-		Client cli4 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.RELEASED);
+		Client cli1 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.PENDENTE);
+		Client cli2 = new Client(null, "Maria", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, StatusClient.DISPONIVEL);
+		Client cli3 = new Client(null, "Marcos", "17981772001", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, StatusClient.PENDENTE);
+		Client cli4 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.DISPONIVEL);
 		
 		Address adr1 = new Address(null, "JK", 15, "Centro", cli1, cit1);
 		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cli2, cit2);

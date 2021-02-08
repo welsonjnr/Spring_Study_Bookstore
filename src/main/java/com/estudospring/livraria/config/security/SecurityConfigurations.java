@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,3 +68,4 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	 
 }
+*/

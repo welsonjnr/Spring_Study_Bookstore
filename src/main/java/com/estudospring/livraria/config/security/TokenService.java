@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import java.util.Date;
@@ -61,3 +62,4 @@ public class TokenService {
 		return Long.parseLong(claims.getSubject());
 	}
 }
+*/

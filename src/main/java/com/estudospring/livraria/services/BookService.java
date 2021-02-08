@@ -38,7 +38,7 @@ public class BookService {
 	
 	public Book insert(Book book) {
 		book.setId(null);
-		book.setBookStatus(BookStatus.AVAILABLE);
+		book.setBookStatus(BookStatus.DISPONIVEL);
 		book.setCategory(catServ.find(book.getCategory().getId()));
 		return bookRepo.save(book);	
 	}
@@ -88,7 +88,7 @@ public class BookService {
 	}
 	
 	public Book fromDTO(BookDTO objDto) {	
-		return new Book(objDto.getId(), objDto.getName(), objDto.getAuthor(), objDto.getEdition(), objDto.getAmount(), catServ.find(objDto.getCategory()));
+		return new Book(objDto.getId(), objDto.getName(), objDto.getAuthor(), objDto.getEdition(), objDto.getBookStatus(),objDto.getAmount(), catServ.find(objDto.getCategory()));
 	}
 	
 }

@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import java.io.IOException;
@@ -62,3 +63,4 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 	
 	
 }
+*/

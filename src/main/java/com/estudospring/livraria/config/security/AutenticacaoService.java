@@ -1,4 +1,4 @@
-package com.estudospring.livraria.config.security;
+/*package com.estudospring.livraria.config.security;
 
 import java.util.Optional;
 
@@ -30,3 +30,4 @@ public class AutenticacaoService implements UserDetailsService {
 	}
 
 }
+*/

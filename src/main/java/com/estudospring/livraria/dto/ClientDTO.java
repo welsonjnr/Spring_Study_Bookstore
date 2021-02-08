@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.estudospring.livraria.domain.Client;
+import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.services.validation.ClientUpdate;
 //Client Data Transfer Object
 @ClientUpdate
@@ -23,6 +24,7 @@ public class ClientDTO implements Serializable {
 	@Email(message="Invalid Email")
 	private String email;
 	private String course;
+	private StatusClient status;
 	private String institution;
 	private Integer period;
 	
@@ -35,6 +37,7 @@ public class ClientDTO implements Serializable {
 		this.name = objDto.getNameClient();
 		this.email = objDto.getEmail();
 		this.course = objDto.getCourse();
+		this.status = objDto.getStatusClient();
 		this.institution = objDto.getInstitution();
 		this.period = objDto.getPeriod();
 	}
@@ -69,6 +72,14 @@ public class ClientDTO implements Serializable {
 
 	public void setCourse(String course) {
 		this.course = course;
+	}
+
+	public StatusClient getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusClient status) {
+		this.status = status;
 	}
 
 	public String getInstitution() {

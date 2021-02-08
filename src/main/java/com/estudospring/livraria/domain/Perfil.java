@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.domain;
 
 import javax.persistence.Entity;
@@ -41,3 +42,4 @@ public class Perfil implements GrantedAuthority{
 	}
 	
 }
+*/
