@@ -1,6 +1,7 @@
 package com.estudospring.livraria.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,9 +42,15 @@ public class ClientResource {
 	}
 	
 	@GetMapping(value = "/findClientName/{nameClient}")
-	public ResponseEntity<Client> findByNameClient(@PathVariable String nameClient){
-		Client obj = clientServ.findByNameClient(nameClient);
-		
+	public ResponseEntity<List<Client>> findByNameClient(@PathVariable String nameClient){
+		List<Client> obj = new ArrayList<Client>();
+		if(nameClient.length() <= 3) {
+			obj = clientServ.findByNameClient(nameClient);
+		}
+		else {
+		String param = nameClient.replace(nameClient.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
+		    obj = clientServ.findByNameClient(param);
+		}
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -67,7 +74,7 @@ public class ClientResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<ClientDTO> update(@Valid @RequestBody ClientDTO clientUpdate, @PathVariable Integer id){
+	public ResponseEntity<ClientDTO> update(@Valid @PathVariable Integer id, @RequestBody ClientDTO clientUpdate){
 		Client obj = clientServ.fromDTO(clientUpdate);
 		obj.setId(id);
 		obj = clientServ.update(obj);

@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.estudospring.livraria.domain.Loan;
+import com.estudospring.livraria.domain.enums.LoanStatus;
 
 public class LoanDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private Integer status;
-	private LocalDate loanDay;
-	//private LocalDate loanReturnDay;
+	private LoanStatus status;
+	private String loanDay;
+	private String loanReturnDay;
 	
 	private Integer bookId;
 	private String nameBook;
@@ -25,20 +26,20 @@ public class LoanDTO implements Serializable {
 	public LoanDTO(Loan objLoan) {
 		super();
 		setId(objLoan.getId());
-		status = objLoan.getLoanStatus().getCod();
+		status = objLoan.getLoanStatus();
 		loanDay = objLoan.getLoanDay();
-		//loanReturnDay = objLoan.getLoanDay().plusDays(14);
+		loanReturnDay = objLoan.getLoanDay();
 		bookId = objLoan.getBook().getId();
 		nameBook = objLoan.getBook().getName();
 		clientId = objLoan.getClient().getId();
-		nameClient = objLoan.getClient().getNameClient();
+		nameClient = objLoan.getClient().getName();
 	}
 
-	public Integer getStatus() {
+	public LoanStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(LoanStatus status) {
 		this.status = status;
 	}
 
@@ -82,20 +83,19 @@ public class LoanDTO implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getLoanDay() {
+	public String getLoanDay() {
 		return loanDay;
 	}
 
-	public void setLoanDay(LocalDate loanDay) {
+	public void setLoanDay(String loanDay) {
 		this.loanDay = loanDay;
 	}
-/*
-	public LocalDate getLoanReturnDay() {
+
+	public String getLoanReturnDay() {
 		return loanReturnDay;
 	}
 
-	public void setLoanReturnDay(LocalDate loanReturnDay) {
+	public void setLoanReturnDay(String loanReturnDay) {
 		this.loanReturnDay = loanReturnDay;
 	}
-*/
 }

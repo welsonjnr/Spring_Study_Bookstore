@@ -1,5 +1,8 @@
 package com.estudospring.livraria.repositories;
 
+import java.util.List;
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,5 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 	Client findByEmail(String email);
 
 	@Transactional
-	Client findByNameClient(String nameClient);
-	
+	List<Client> findByNameContaining(String name);
 }

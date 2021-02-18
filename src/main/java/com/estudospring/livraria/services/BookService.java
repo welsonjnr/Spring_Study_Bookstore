@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.Category;
+import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.dto.BookDTO;
 import com.estudospring.livraria.repositories.BookRepository;
@@ -35,6 +36,15 @@ public class BookService {
 		}
 		return book.orElse(null);
 	}
+	
+		public List<Book> findByNameBook(String nameBook) {
+		List<Book> obj = bookRepo.findByNameContaining(nameBook);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Livro: " + nameBook + ", Tipo: " + Book.class.getName());
+		}
+			return obj;
+		}
 	
 	public Book insert(Book book) {
 		book.setId(null);

@@ -85,9 +85,9 @@ public class DBService {
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
 	
-		Loan loan1 = new Loan (null, LocalDate.of(2019, Month.MARCH, 5) , LoanStatus.BORROWED, bk1, cli1);
-		Loan loan2 = new Loan (null, LocalDate.of(2019, Month.APRIL, 10), LoanStatus.LATE, bk2, cli1);
-		Loan loan3 = new Loan (null, LocalDate.of(2019, Month.JULY, 2), LoanStatus.CANCELED, bk3, cli3);
+		Loan loan1 = new Loan (null, "18/04/2020" , LoanStatus.OK, bk1, cli1);
+		Loan loan2 = new Loan (null, "20/04/2020", LoanStatus.CANCELADO, bk2, cli1);
+		Loan loan3 = new Loan (null, "30/02/2020", LoanStatus.RENOVADO, bk3, cli3);
 		
 		cli1.getLoans().addAll(Arrays.asList(loan1, loan2));
 		cli3.getLoans().addAll(Arrays.asList(loan3));

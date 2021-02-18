@@ -2,11 +2,11 @@ package com.estudospring.livraria.domain.enums;
 
 public enum LoanStatus {
 	
-	BORROWED (1, "Borrowed"),
-	RETURNED (2, "Returned"),
-	CANCELED(3, "Canceled"),
-	RENOVATED(4, "Renovated"),
-	LATE (5, "Late");
+	OK (1, "Ok"),
+	DEVOLVIDO (2, "Devolvido"),
+	CANCELADO(3, "Cancelado"),
+	RENOVADO(4, "Renovado"),
+	ATRASADO(5, "Atrasado");
 	
 	private int cod;
 	private String status;

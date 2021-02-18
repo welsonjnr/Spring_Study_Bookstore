@@ -1,5 +1,7 @@
 package com.estudospring.livraria.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,8 @@ public class LoanService {
 	@Autowired 
 	private BookService servBook;
 	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	public Loan find(Integer id) {
 		Optional<Loan> obj = repoLoan.findById(id);
 		
@@ -42,6 +46,14 @@ public class LoanService {
 		return obj.orElseThrow(null);
 	}
 	
+	public List<Loan> findLoanByNameClient(String nameClient) {
+		List<Loan> obj = repoLoan.findByClientNameContaining(nameClient);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
+		}
+			return obj;
+	}
 
 	public Loan insert(Loan loan) {
 		loan.setId(null);
@@ -50,28 +62,32 @@ public class LoanService {
 		Client cli = servCli.find(loan.getClient().getId());
 		cli.setStatusClient(StatusClient.PENDENTE);
 		servCli.update(cli);
-		
+		loan.setLoanDay(LocalDate.now().format(formatter));
+		loan.setLoanReturnDay(LocalDate.now().plusDays(7).format(formatter));
 		loan.setBook(validationBook(loan.getBook().getId()));
+		loan.setLoanStatus(LoanStatus.OK);
 		Book book = servBook.find(loan.getClient().getId());
-		book.setAmount(book.getAmount() -1);
 		if(book.getAmount() == 1) {
 			book.setBookStatus(BookStatus.UNICO);
+			throw new BookUnavailableForLoan("O Livro está indisponível para empréstimo");
+		}else {
+			book.setAmount(book.getAmount() -1);
 		}
-		servBook.update(book);
 		
+		servBook.update(book);
 		return repoLoan.save(loan);
 		
 	}
 	
 	public Loan renewal(Loan loan) {
 		Loan loanRenewal = find(loan.getId());
-		loanRenewal.setLoanStatus(LoanStatus.RENOVATED);
+		loanRenewal.setLoanStatus(LoanStatus.RENOVADO);
 		return repoLoan.save(loanRenewal);
 	}
 	
 	public Loan returned(Loan loan) {
 		Loan loanReturned = find(loan.getId());
-		loanReturned.setLoanStatus(LoanStatus.RETURNED);
+		loanReturned.setLoanStatus(LoanStatus.DEVOLVIDO);
 		Book book = servBook.find(loan.getBook().getId());
 		book.setAmount(book.getAmount() + 1);
 		if(book.getAmount() > 1) {

@@ -1,6 +1,7 @@
 package com.estudospring.livraria.resources;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,23 @@ public class LoanResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(loan.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+
+	@GetMapping(value = "/findLoanByClientName/{nameClient}")
+	public ResponseEntity<List<LoanDTO>> findLoanByNameClient(@PathVariable String nameClient){
+		List<Loan> loans = new ArrayList<Loan>();
+		List<LoanDTO> listDto = new ArrayList<LoanDTO>(); 
+		if(nameClient.length() <= 3) {
+			loans = loanServ.findLoanByNameClient(nameClient);
+			listDto = loans.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
+		}
+		else {
+			String param = nameClient.replace(nameClient.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
+			loans = loanServ.findLoanByNameClient(param);
+			listDto = loans.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
+		}
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 	
 	@PutMapping(value="/renew/{id}")
 	public ResponseEntity<Loan> renewLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
@@ -59,14 +77,12 @@ public class LoanResource {
 		loan = loanServ.returned(loan);
 		return ResponseEntity.noContent().build();
 	}
-	
-	/*
+
 	@DeleteMapping(value="/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		loanServ.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	*/
 	
 	@GetMapping
 	public ResponseEntity<List<LoanDTO>> findAll(){

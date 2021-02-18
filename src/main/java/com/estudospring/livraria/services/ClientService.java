@@ -39,8 +39,8 @@ public class ClientService {
 		return obj.orElse(null);
 	}
 
-	public Client findByNameClient(String nameClient) {
-		Client obj = repoCli.findByNameClient(nameClient);
+	public List<Client> findByNameClient(String nameClient) {
+		List<Client> obj = repoCli.findByNameContaining(nameClient);
 		
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
@@ -103,7 +103,7 @@ public class ClientService {
 	}
 	
 	private void updateData(Client newObj, Client obj) {
-		newObj.setNameClient(obj.getNameClient());
+		newObj.setName(obj.getName());
 		newObj.setEmail(obj.getEmail());
 		
 		if(obj.getCourse() != null) {

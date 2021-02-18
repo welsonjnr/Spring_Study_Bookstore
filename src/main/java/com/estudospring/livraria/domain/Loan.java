@@ -23,9 +23,9 @@ public class Loan implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private LocalDate loanDay;
+	private String loanDay;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private LocalDate loanReturnDay;
+	private String loanReturnDay;
 	private LoanStatus loanStatus;
 	
 	@ManyToOne
@@ -40,7 +40,7 @@ public class Loan implements Serializable {
 	public Loan() {
 	}
 	
-	public Loan(Integer id, LocalDate loanDay, LoanStatus loanStatus, Book book, Client client) {
+	public Loan(Integer id, String loanDay, LoanStatus loanStatus, Book book, Client client) {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
@@ -57,25 +57,21 @@ public class Loan implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getLoanDay() {
+	public String getLoanDay() {
 		return loanDay;
 	}
 
-	public void setLoanDay(LocalDate loanDay) {
+	public void setLoanDay(String loanDay) {
 		this.loanDay = loanDay;
 	}
-/*
-	public LocalDate getLoanReturnDay() {
+	public String getLoanReturnDay() {
 		return loanReturnDay;
 	}
 
-	public void setLoanReturnDay(LocalDate loanReturnDay) {
-		this.loanReturnDay = this.loanDay.plusDays(14);
+	public void setLoanReturnDay(String localDate) {
+		this.loanReturnDay = localDate;
 	}
-*/
-	
-	
-	
+
 	public Book getBook() {
 		return book;
 	}
@@ -140,7 +136,7 @@ public class Loan implements Serializable {
 		builder.append(", Autor: ");
 		builder.append(book.getAuthor());
 		builder.append("| Cliente = ");
-		builder.append(client.getNameClient());
+		builder.append(client.getName());
 		builder.append(", CPF: ");
 		builder.append(client.getCpf());
 		builder.append(", Estudante da instituição: ");
