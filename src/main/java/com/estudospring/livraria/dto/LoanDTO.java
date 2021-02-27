@@ -1,7 +1,7 @@
 package com.estudospring.livraria.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+
 
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.domain.enums.LoanStatus;
@@ -28,7 +28,7 @@ public class LoanDTO implements Serializable {
 		setId(objLoan.getId());
 		status = objLoan.getLoanStatus();
 		loanDay = objLoan.getLoanDay();
-		loanReturnDay = objLoan.getLoanDay();
+		loanReturnDay = objLoan.getLoanReturnDay();
 		bookId = objLoan.getBook().getId();
 		nameBook = objLoan.getBook().getName();
 		clientId = objLoan.getClient().getId();

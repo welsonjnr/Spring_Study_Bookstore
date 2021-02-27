@@ -1,10 +1,12 @@
 package com.estudospring.livraria.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.StatusClient;
+import com.estudospring.livraria.dto.LoanNewDTO;
 import com.estudospring.livraria.repositories.LoanRepository;
 import com.estudospring.livraria.services.exceptions.BookUnavailableForLoan;
 import com.estudospring.livraria.services.exceptions.CustomerWithOpenLoan;
@@ -35,7 +38,7 @@ public class LoanService {
 	@Autowired 
 	private BookService servBook;
 	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	DateTimeFormatter dtf = DateTimeFormat.forPattern("dd/MM/yyyy");
 	
 	public Loan find(Integer id) {
 		Optional<Loan> obj = repoLoan.findById(id);
@@ -56,17 +59,22 @@ public class LoanService {
 	}
 
 	public Loan insert(Loan loan) {
+		
+		Client cli = servCli.find(loan.getClient().getId());
+		Book book = servBook.find(loan.getBook().getId());
+		
 		loan.setId(null);
 		loan.setClient(validationClient(loan.getClient().getId()));
 		
-		Client cli = servCli.find(loan.getClient().getId());
-		cli.setStatusClient(StatusClient.PENDENTE);
+		
+		cli.setStatus(StatusClient.PENDENTE);
 		servCli.update(cli);
-		loan.setLoanDay(LocalDate.now().format(formatter));
-		loan.setLoanReturnDay(LocalDate.now().plusDays(7).format(formatter));
+		
+		loan.setLoanDay(LocalDate.now().toString(dtf));
+		loan.setLoanReturnDay(LocalDate.now().plusDays(15).toString(dtf));
 		loan.setBook(validationBook(loan.getBook().getId()));
 		loan.setLoanStatus(LoanStatus.OK);
-		Book book = servBook.find(loan.getClient().getId());
+		
 		if(book.getAmount() == 1) {
 			book.setBookStatus(BookStatus.UNICO);
 			throw new BookUnavailableForLoan("O Livro está indisponível para empréstimo");
@@ -81,6 +89,8 @@ public class LoanService {
 	
 	public Loan renewal(Loan loan) {
 		Loan loanRenewal = find(loan.getId());
+		loanRenewal.setLoanDay(LocalDate.now().toString(dtf));
+		loanRenewal.setLoanReturnDay(LocalDate.now().plusDays(15).toString(dtf));
 		loanRenewal.setLoanStatus(LoanStatus.RENOVADO);
 		return repoLoan.save(loanRenewal);
 	}
@@ -88,15 +98,15 @@ public class LoanService {
 	public Loan returned(Loan loan) {
 		Loan loanReturned = find(loan.getId());
 		loanReturned.setLoanStatus(LoanStatus.DEVOLVIDO);
-		Book book = servBook.find(loan.getBook().getId());
+		Book book = servBook.find(loanReturned.getBook().getId());
 		book.setAmount(book.getAmount() + 1);
 		if(book.getAmount() > 1) {
 			book.setBookStatus(BookStatus.DISPONIVEL);
 		}
 		servBook.update(book);
 		
-		Client client = servCli.find(loan.getClient().getId());
-		client.setStatusClient(StatusClient.DISPONIVEL);
+		Client client = servCli.find(loanReturned.getClient().getId());
+		client.setStatus(StatusClient.DISPONIVEL);
 		servCli.update(client);
 
 		return repoLoan.save(loanReturned);
@@ -124,7 +134,7 @@ public class LoanService {
 
 	public Client validationClient(Integer id) {
 		Client cli = servCli.find(id);
-		if(cli.getStatusClient() == StatusClient.PENDENTE) {
+		if(cli.getStatus() == StatusClient.PENDENTE) {
 			throw new CustomerWithOpenLoan("O usuário está com um empréstimo pendente!");
 		}
 		return cli;
@@ -142,7 +152,10 @@ public class LoanService {
 		}
 		
 		return book;
-		 	
+	}
+	
+	public Loan fromDTO(LoanNewDTO objDto) {
+		return new Loan(objDto.getId(), servBook.find(objDto.getBookId()), servCli.find(objDto.getClientId()));
 	}
 	
 }

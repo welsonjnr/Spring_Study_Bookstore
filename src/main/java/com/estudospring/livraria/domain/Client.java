@@ -32,7 +32,7 @@ public class Client implements Serializable {
 	private String institution;
 	private String email;
 	private Integer period;
-	private Integer statusClient;
+	private Integer status;
 
 	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
 	private List<Address> address = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Client implements Serializable {
 	}
 	
 	public Client(Integer id, String name, String cpf, String course, String institution, String email, Integer period,
-			StatusClient statusClient) {
+			StatusClient status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,7 +58,7 @@ public class Client implements Serializable {
 		this.institution = institution;
 		this.email = email;
 		this.period = period;
-		this.statusClient = (statusClient==null) ? null : statusClient.getCod();
+		this.status = (status==null) ? null : status.getCod();
 	}
 
 	public Integer getId() {
@@ -134,12 +134,12 @@ public class Client implements Serializable {
 		this.phones = phones;
 	}
 
-	public StatusClient getStatusClient() {
-		return StatusClient.toEnum(statusClient);
+	public StatusClient getStatus() {
+		return StatusClient.toEnum(status);
 	}
 
-	public void setStatusClient(StatusClient statusClient) {
-		this.statusClient = statusClient.getCod();
+	public void setStatus(StatusClient status) {
+		this.status = status.getCod();
 	}
 	
 	public List<Loan> getLoans() {

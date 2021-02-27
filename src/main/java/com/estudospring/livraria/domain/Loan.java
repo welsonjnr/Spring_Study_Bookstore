@@ -1,7 +1,6 @@
 package com.estudospring.livraria.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
@@ -26,7 +26,7 @@ public class Loan implements Serializable {
 	private String loanDay;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private String loanReturnDay;
-	private LoanStatus loanStatus;
+	private Integer loanStatus;
 	
 	@ManyToOne
 	@JoinColumn(name="book_id")
@@ -44,7 +44,24 @@ public class Loan implements Serializable {
 		super();
 		this.id = id;
 		this.loanDay = loanDay;
-		this.loanStatus = loanStatus;
+		this.loanStatus = (loanStatus==null) ? null : loanStatus.getCod();
+		this.book = book;
+		this.client = client;
+	}
+
+	public Loan(Integer id, Book book, Client client) {
+		super();
+		this.id = id;
+		this.book = book;
+		this.client = client;
+	}
+	
+	public Loan(Integer id, String loanDay, String loanReturnDay, LoanStatus loanStatus, Book book, Client client) {
+		super();
+		this.id = id;
+		this.loanDay = loanDay;
+		this.loanReturnDay = loanReturnDay;
+		this.loanStatus = (loanStatus==null) ? null : loanStatus.getCod();
 		this.book = book;
 		this.client = client;
 	}
@@ -77,11 +94,11 @@ public class Loan implements Serializable {
 	}
 
 	public LoanStatus getLoanStatus() {
-		return loanStatus;
+		return LoanStatus.toEnum(loanStatus);
 	}
 
 	public void setLoanStatus(LoanStatus loanStatus) {
-		this.loanStatus = loanStatus;
+		this.loanStatus = loanStatus.getCod();
 	}
 
 	public void setBook(Book book) {

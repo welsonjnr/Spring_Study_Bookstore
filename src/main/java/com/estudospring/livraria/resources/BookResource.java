@@ -47,6 +47,19 @@ public class BookResource {
 		return ResponseEntity.created(uri).body(new BookDTO(book));
 	}
 
+	@GetMapping(value = "/findBookNameUnico/{nameBook}")
+	public ResponseEntity<Book> findByNameBookUnico(@PathVariable String nameBook){
+		Book book = new Book();
+		if(nameBook.length() <= 3) {
+			book = bookServ.findByNameBookUnico(nameBook);
+		}
+		else {
+		String param = nameBook.replace(nameBook.substring(0, 1), nameBook.substring(0, 1).toUpperCase());
+		    book = bookServ.findByNameBookUnico(param);
+		}
+		return ResponseEntity.ok().body(book);
+	}
+	
 	@GetMapping(value = "/findBookName/{nameBook}")
 	public ResponseEntity<List<Book>> findByNameBook(@PathVariable String nameBook){
 		List<Book> obj = new ArrayList<Book>();

@@ -39,6 +39,16 @@ public class ClientService {
 		return obj.orElse(null);
 	}
 
+	public Client findByNameClientUnico(String nameClient) {
+		List<Client> obj = repoCli.findByNameContaining(nameClient);
+		Client cli = obj.get(0);
+		
+		if (cli == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
+		}
+			return cli;
+		}
+	
 	public List<Client> findByNameClient(String nameClient) {
 		List<Client> obj = repoCli.findByNameContaining(nameClient);
 		
@@ -83,6 +93,7 @@ public class ClientService {
 	@Transactional
 	public Client insert(Client obj) {
 		obj.setId(null);
+		obj.setStatus(StatusClient.DISPONIVEL);
 		obj = repoCli.save(obj);
 		repoAddress.saveAll(obj.getAddress());
 		return obj;

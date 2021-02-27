@@ -23,4 +23,5 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
 
 	@Transactional
 	List<Client> findByNameContaining(String name);
+	
 }

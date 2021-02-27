@@ -54,6 +54,19 @@ public class ClientResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@GetMapping(value = "/findClientNameUnico/{nameClient}")
+	public ResponseEntity<Client> findByNameClientUnico(@PathVariable String nameClient){
+		Client cli = new Client();
+		if(nameClient.length() <= 3) {
+			cli = clientServ.findByNameClientUnico(nameClient);
+		}
+		else {
+		String param = nameClient.replace(nameClient.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
+		    cli = clientServ.findByNameClientUnico(param);
+		}
+		return ResponseEntity.ok().body(cli);
+	}
+	
 	
 	/*
 	 * Este método vai ser requisitado para o POST(Registro de algo no banco de dados)

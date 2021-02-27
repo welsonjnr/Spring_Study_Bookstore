@@ -1,4 +1,3 @@
-/*
 package com.estudospring.livraria.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
-		//Avisando para o Sprin Security que nossa política de criação será STATELESS e não SESSION
+		//Avisando para o Spring Security que nossa política de criação será STATELESS e não SESSION
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, userRepo), UsernamePasswordAuthenticationFilter.class)
 		;
@@ -64,8 +63,5 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 
-	}
-
-	 
+	} 
 }
-*/

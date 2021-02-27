@@ -1,9 +1,10 @@
 package com.estudospring.livraria.services;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,10 +69,10 @@ public class DBService {
 		
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		
-		Client cli1 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.PENDENTE);
-		Client cli2 = new Client(null, "Maria", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, StatusClient.DISPONIVEL);
-		Client cli3 = new Client(null, "Marcos", "17981772001", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, StatusClient.PENDENTE);
-		Client cli4 = new Client(null, "João", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.DISPONIVEL);
+		Client cli1 = new Client(null, "João C", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.PENDENTE);
+		Client cli2 = new Client(null, "Maria B", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, StatusClient.DISPONIVEL);
+		Client cli3 = new Client(null, "Marcos A", "17981772001", "Advocacia", "Universidade de Lisboa", "marcos@gmail.com", 2, StatusClient.PENDENTE);
+		Client cli4 = new Client(null, "João S", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.DISPONIVEL);
 		
 		Address adr1 = new Address(null, "JK", 15, "Centro", cli1, cit1);
 		Address adr2 = new Address(null, "Campos Novos", 243, "São Bernado", cli2, cit2);
@@ -85,9 +86,9 @@ public class DBService {
 		
 		addressRepository.saveAll(Arrays.asList(adr1, adr2, adr3));
 	
-		Loan loan1 = new Loan (null, "18/04/2020" , LoanStatus.OK, bk1, cli1);
-		Loan loan2 = new Loan (null, "20/04/2020", LoanStatus.CANCELADO, bk2, cli1);
-		Loan loan3 = new Loan (null, "30/02/2020", LoanStatus.RENOVADO, bk3, cli3);
+		Loan loan1 = new Loan (null,  LocalDate.now().withDayOfMonth(2).toString(), LocalDate.now().withDayOfMonth(2).plusDays(8).toString(), LoanStatus.OK, bk1, cli1);
+		Loan loan2 = new Loan (null, LocalDate.now().withDayOfMonth(2).toString(), LocalDate.now().withDayOfMonth(4).plusDays(7).toString(),LoanStatus.CANCELADO, bk2, cli1);
+		Loan loan3 = new Loan (null, LocalDate.now().withDayOfMonth(2).toString(), LocalDate.now().withDayOfMonth(8).plusDays(3).toString(),LoanStatus.RENOVADO, bk3, cli3);
 		
 		cli1.getLoans().addAll(Arrays.asList(loan1, loan2));
 		cli3.getLoans().addAll(Arrays.asList(loan3));

@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.dto.LoanDTO;
+import com.estudospring.livraria.dto.LoanNewDTO;
 import com.estudospring.livraria.services.LoanService;
 
 @RestController
@@ -41,7 +43,8 @@ public class LoanResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Loan> insert(@Valid @RequestBody Loan loan){
+	public ResponseEntity<LoanNewDTO> insert(@Valid @RequestBody LoanNewDTO newLoan){
+		Loan loan = loanServ.fromDTO(newLoan);
 		loan = loanServ.insert(loan);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(loan.getId()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -65,14 +68,15 @@ public class LoanResource {
 	
 	
 	@PutMapping(value="/renew/{id}")
-	public ResponseEntity<Loan> renewLoan(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+	public ResponseEntity<Loan> renewLoan(@Valid @PathVariable Integer id , @RequestBody LoanNewDTO renewLoan){
+		Loan loan = loanServ.fromDTO(renewLoan);
 		loan.setId(id);
 		loan = loanServ.renewal(loan);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping(value="/return/{id}")
-	public ResponseEntity<Loan> returnedBook(@Valid @RequestBody Loan loan, @PathVariable Integer id){
+	public ResponseEntity<Loan> returnedBook(@Valid @PathVariable Integer id, @RequestBody Loan loan){
 		loan.setId(id);
 		loan = loanServ.returned(loan);
 		return ResponseEntity.noContent().build();

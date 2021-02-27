@@ -17,7 +17,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.estudospring.livraria.domain.enums.BookStatus;
+import com.estudospring.livraria.domain.enums.StatusClient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Book implements Serializable {
@@ -32,8 +34,7 @@ public class Book implements Serializable {
 	@NotEmpty(message="Required!")
 	private String author;
 	private String edition;
-	@Enumerated(EnumType.STRING)
-	private BookStatus bookStatus;
+	private Integer bookStatus;
 	@NotNull(message="Required!")	
 	private Integer amount;
 
@@ -54,7 +55,7 @@ public class Book implements Serializable {
 		this.name = name;
 		this.author = author;
 		this.edition = edition;
-		this.bookStatus = bookStatus;
+		this.bookStatus = (bookStatus==null) ? null : bookStatus.getCod();
 		this.amount = amount;
 		this.category = category;
 	}
@@ -92,15 +93,12 @@ public class Book implements Serializable {
 	}
 	
 	public BookStatus getBookStatus() {
-		return bookStatus;
+		return BookStatus.toEnum(bookStatus);
 	}
 
 	public void setBookStatus(BookStatus bookStatus) {
-		if(this.amount == 1) {
-		this.bookStatus = BookStatus.UNICO;
-			}
-		this.bookStatus = bookStatus;
-		}
+		this.bookStatus = bookStatus.getCod();
+	}
 
 	public Integer getAmount() {
 		return amount;
