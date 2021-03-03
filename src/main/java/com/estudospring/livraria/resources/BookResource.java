@@ -26,7 +26,7 @@ import com.estudospring.livraria.dto.BookDTO;
 import com.estudospring.livraria.services.BookService;
 
 @RestController
-@RequestMapping(value="/books")
+@RequestMapping(value="/library/books")
 public class BookResource {
 	
 	@Autowired
@@ -46,33 +46,7 @@ public class BookResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(book.getId()).toUri();
 		return ResponseEntity.created(uri).body(new BookDTO(book));
 	}
-
-	@GetMapping(value = "/findBookNameUnico/{nameBook}")
-	public ResponseEntity<Book> findByNameBookUnico(@PathVariable String nameBook){
-		Book book = new Book();
-		if(nameBook.length() <= 3) {
-			book = bookServ.findByNameBookUnico(nameBook);
-		}
-		else {
-		String param = nameBook.replace(nameBook.substring(0, 1), nameBook.substring(0, 1).toUpperCase());
-		    book = bookServ.findByNameBookUnico(param);
-		}
-		return ResponseEntity.ok().body(book);
-	}
-	
-	@GetMapping(value = "/findBookName/{nameBook}")
-	public ResponseEntity<List<Book>> findByNameBook(@PathVariable String nameBook){
-		List<Book> obj = new ArrayList<Book>();
-		if(nameBook.length() <= 3) {
-			obj = bookServ.findByNameBook(nameBook);
-		}
-		else {
-		String param = nameBook.replace(nameBook.substring(0, 1), nameBook.substring(0, 1).toUpperCase());
-		    obj = bookServ.findByNameBook(param);
-		}
-		return ResponseEntity.ok().body(obj);
-	}
-	
+		
 	@PutMapping(value="/{id}")
 	@Transactional
 	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody BookDTO bookUpdate){
@@ -90,15 +64,32 @@ public class BookResource {
 		return ResponseEntity.ok().build();
 	}
 	
+	@GetMapping(value = "/findBookByName/{nameBook}")
+	public ResponseEntity<List<Book>> findByNameBook(@PathVariable String nameBook){
+		List<Book> obj = new ArrayList<Book>();
+		String params = nameBook;
+		if(!(params.startsWith("x") && params.endsWith("8"))) {
+			if(params.length() <= 3) {
+				obj = bookServ.findByNameBook(params);
+			}
+			else{
+			String param = params.replace(params.substring(0, 1), params.substring(0, 1).toUpperCase());
+		    obj = bookServ.findByNameBook(param);
+			}
+			return ResponseEntity.ok().body(obj);
+		}
+			obj = bookServ.findAll();
+			return ResponseEntity.ok().body(obj);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<Book>> findAll(){
 		List<Book> list = bookServ.findAll();
 		return ResponseEntity.ok().body(list);
-		
 	}
 	
-	@GetMapping(value="/principal")
-	public ResponseEntity<List<Book>> findAllPrincipal(){
+	@GetMapping(value="/home")
+	public ResponseEntity<List<Book>> findHomeBooks(){
 		List<Book> list = bookServ.findAll();
 		List<Book> subList = list;
 		if(list.size() > 6) {
@@ -111,7 +102,7 @@ public class BookResource {
 	public ResponseEntity<Page<Book>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value="orderBy", defaultValue= "nome") String orderBy,
+			@RequestParam(value="orderBy", defaultValue= "name") String orderBy,
 			@RequestParam(value="direction",defaultValue ="ASC" ) String direction){
 			
 			Page<Book> list = bookServ.findPage(page, linesPerPage, orderBy, direction);

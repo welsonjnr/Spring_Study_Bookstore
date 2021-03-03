@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.resources;
 
 import javax.validation.Valid;
@@ -51,3 +52,4 @@ public class AutenticacaoResource {
 		
 	}
 }
+*/

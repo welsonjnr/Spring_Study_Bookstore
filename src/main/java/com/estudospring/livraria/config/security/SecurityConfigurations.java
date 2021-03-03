@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/books/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.anyRequest().authenticated()
+		.and().cors()
 		.and().csrf().disable()
 		//Avisando para o Spring Security que nossa política de criação será STATELESS e não SESSION
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -65,3 +67,4 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	} 
 }
+*/

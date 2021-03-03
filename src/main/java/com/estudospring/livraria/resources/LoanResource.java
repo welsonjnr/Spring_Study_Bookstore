@@ -29,7 +29,7 @@ import com.estudospring.livraria.dto.LoanNewDTO;
 import com.estudospring.livraria.services.LoanService;
 
 @RestController
-@RequestMapping(value= "/loans")
+@RequestMapping(value= "/library/loans")
 public class LoanResource {
 	
 	@Autowired
@@ -100,7 +100,7 @@ public class LoanResource {
 	public ResponseEntity<Page<LoanDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,
-			@RequestParam(value="orderBy", defaultValue= "nome") String orderBy,
+			@RequestParam(value="orderBy", defaultValue= "loanDay") String orderBy,
 			@RequestParam(value="direction",defaultValue ="ASC" ) String direction){
 			
 			Page<Loan> list = loanServ.findPage(page, linesPerPage, orderBy, direction);

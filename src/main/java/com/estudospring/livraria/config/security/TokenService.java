@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.estudospring.livraria.domain.UserLogin;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -28,7 +30,8 @@ public class TokenService {
 		
 		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 		//Método para a geração do token
-		return Jwts.builder()
+		
+				return Jwts.builder()
 				//Qual API que está gerando esse token
 				.setIssuer("API de Gerenciamento de Biblioteca")
 				//Usúario autenticado que pertence o token
@@ -61,3 +64,4 @@ public class TokenService {
 		return Long.parseLong(claims.getSubject());
 	}
 }
+*/

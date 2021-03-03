@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.domain;
 
 import java.util.ArrayList;
@@ -127,3 +128,4 @@ public class UserLogin implements UserDetails {
 		return true;
 	}	
 }
+*/

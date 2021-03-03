@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.config.security;
 
 import java.io.IOException;
@@ -53,9 +54,10 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 		//Pegar a informação do Header Authorization(Token)
 		String token = request.getHeader("Authorization");
 		//Verificar se o cabeçalho da requisisção está de acordo com a configuração
-		if(token == null || token.isEmpty() || !token.startsWith("Bearer")) {
+		if(token == null || token.isEmpty()) {
 			return null;
 		}
-		return token.substring(7, token.length());
+		return token;
 	}
 }
+*/

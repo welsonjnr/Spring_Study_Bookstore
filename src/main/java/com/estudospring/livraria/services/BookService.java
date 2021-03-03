@@ -37,16 +37,6 @@ public class BookService {
 		return book.orElse(null);
 	}
 
-	public Book findByNameBookUnico(String nameBook) {
-		List<Book> obj = bookRepo.findByNameContaining(nameBook);
-		Book book = obj.get(0);
-		if (book == null) {
-			throw new ObjectNotFoundException(
-					"Objeto not found! Nome do Livro: " + nameBook + ", Tipo: " + Book.class.getName());
-		}
-		return book;
-	}
-
 	public List<Book> findByNameBook(String nameBook) {
 		List<Book> obj = bookRepo.findByNameContaining(nameBook);
 

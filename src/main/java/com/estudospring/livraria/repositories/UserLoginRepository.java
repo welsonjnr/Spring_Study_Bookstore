@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.repositories;
 
 import java.util.Optional;
@@ -11,3 +12,4 @@ public interface UserLoginRepository extends JpaRepository<UserLogin, Long> {
 	Optional<UserLogin> findByEmail(String email);
 	
 }
+*/

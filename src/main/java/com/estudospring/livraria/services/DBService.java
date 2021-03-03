@@ -25,6 +25,7 @@ import com.estudospring.livraria.repositories.CityRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
 import com.estudospring.livraria.repositories.LoanRepository;
 //import com.estudospring.livraria.repositories.UserLoginRepository;
+//import com.estudospring.livraria.repositories.UserLoginRepository;
 
 @Service
 public class DBService {
@@ -41,15 +42,15 @@ public class DBService {
 	private ClientRepository clientRepository;
 	@Autowired
 	private LoanRepository loanRepository;
-	
-	//@Autowired
+//	@Autowired
 //	private UserLoginRepository userLoginRepo;
 	
 	public void instatiateTestDatabase() {
 		
 //		UserLogin userLogin = new UserLogin(null, "joão", "a@gmail.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq");
+//		UserLogin userLogin1 = new UserLogin(null, "Fernando", "j@gmail.com", "123456");
 		
-	//	userLoginRepo.save(userLogin);
+//		userLoginRepo.saveAll(Arrays.asList(userLogin, userLogin1));
 		
 		Category cat1 = new Category(null, "Literatura");
 		Category cat2 = new Category(null, "Financias");

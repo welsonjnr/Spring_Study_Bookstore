@@ -1,3 +1,4 @@
+/*
 package com.estudospring.livraria.dto;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,3 +25,4 @@ public class LoginForm {
 	}
 	
 }
+*/

@@ -22,13 +22,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.dto.ClientDTO;
 import com.estudospring.livraria.dto.ClientNewDTO;
 import com.estudospring.livraria.services.ClientService;
 
 @RestController
-@RequestMapping(value = "/clients")
+@RequestMapping(value = "/library/clients")
 public class ClientResource {
 
 	@Autowired
@@ -54,17 +55,23 @@ public class ClientResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@GetMapping(value = "/findClientNameUnico/{nameClient}")
-	public ResponseEntity<Client> findByNameClientUnico(@PathVariable String nameClient){
-		Client cli = new Client();
+	@GetMapping(value = "/findClientByName/{nameClient}")
+	public ResponseEntity<List<Client>> findByNameClientUnico(@PathVariable String nameClient){
+		List<Client> obj = new ArrayList<Client>();
+		String params = nameClient;
+		
+		if(!(params.startsWith("x") && params.endsWith("8"))) {
 		if(nameClient.length() <= 3) {
-			cli = clientServ.findByNameClientUnico(nameClient);
+			obj = clientServ.findByNameClient(nameClient);
 		}
 		else {
-		String param = nameClient.replace(nameClient.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
-		    cli = clientServ.findByNameClientUnico(param);
+		String param = params.replace(params.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
+		    obj = clientServ.findByNameClient(param);
 		}
-		return ResponseEntity.ok().body(cli);
+		return ResponseEntity.ok().body(obj);
+		}
+		obj = clientServ.findAll();
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	
@@ -119,16 +126,15 @@ public class ClientResource {
 		 * quantidade de objetos por páginas. Para não sobrecarregar o sistema.
 		 */
 		@GetMapping(value="/find/page")
-		public ResponseEntity<Page<ClientDTO>> findPage(
+		public ResponseEntity<Page<Client>> findPage(
 				// RequestParam: Serve para colocar as informações como padrão. Caso não
 				// informada pelo usuário
 				@RequestParam(value="page", defaultValue="0") Integer page,
 				@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,
-				@RequestParam(value="orderBy", defaultValue= "nome") String orderBy,
+				@RequestParam(value="orderBy", defaultValue= "name") String orderBy,
 				@RequestParam(value="direction",defaultValue ="ASC" ) String direction){
 			Page<Client> list = clientServ.findPage(page, linesPerPage, orderBy, direction);
-			Page<ClientDTO> listDto = list.map(obj -> new ClientDTO(obj));
-			return ResponseEntity.ok().body(listDto);
+			return ResponseEntity.ok().body(list);
 		}
 	
 }
