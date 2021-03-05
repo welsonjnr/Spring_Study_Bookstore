@@ -1,8 +1,6 @@
 package com.estudospring.livraria.services;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
-//import com.estudospring.livraria.domain.UserLogin;
+import com.estudospring.livraria.domain.UserLogin;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.StatusClient;
@@ -24,8 +22,7 @@ import com.estudospring.livraria.repositories.CategoryRepository;
 import com.estudospring.livraria.repositories.CityRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
 import com.estudospring.livraria.repositories.LoanRepository;
-//import com.estudospring.livraria.repositories.UserLoginRepository;
-//import com.estudospring.livraria.repositories.UserLoginRepository;
+import com.estudospring.livraria.repositories.UserLoginRepository;
 
 @Service
 public class DBService {
@@ -42,15 +39,15 @@ public class DBService {
 	private ClientRepository clientRepository;
 	@Autowired
 	private LoanRepository loanRepository;
-//	@Autowired
-//	private UserLoginRepository userLoginRepo;
+	@Autowired
+	private UserLoginRepository userLoginRepo;
 	
 	public void instatiateTestDatabase() {
 		
-//		UserLogin userLogin = new UserLogin(null, "joão", "a@gmail.com", "$2a$10$sFKmbxbG4ryhwPNx/l3pgOJSt.fW1z6YcUnuE2X8APA/Z3NI/oSpq");
-//		UserLogin userLogin1 = new UserLogin(null, "Fernando", "j@gmail.com", "123456");
+		UserLogin userLogin = new UserLogin(null, "joão", "a@gmail.com", "987654");
+		UserLogin userLogin1 = new UserLogin(null, "Fernando", "j@gmail.com", "123456");
 		
-//		userLoginRepo.saveAll(Arrays.asList(userLogin, userLogin1));
+		userLoginRepo.saveAll(Arrays.asList(userLogin, userLogin1));
 		
 		Category cat1 = new Category(null, "Literatura");
 		Category cat2 = new Category(null, "Financias");

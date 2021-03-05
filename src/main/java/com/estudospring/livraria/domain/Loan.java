@@ -8,13 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
 
 @Entity
+
 public class Loan implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,6 +27,7 @@ public class Loan implements Serializable {
 	private String loanDay;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private String loanReturnDay;
+	
 	private Integer loanStatus;
 	
 	@ManyToOne
