@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.dto.BookDTO;
+
 import com.estudospring.livraria.services.BookService;
 
 @RestController
@@ -36,6 +37,16 @@ public class BookResource {
 	public ResponseEntity<?> find(@PathVariable Integer id){
 		Book book = bookServ.find(id);
 		return ResponseEntity.ok().body(book);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Book>> findByFiltro(@RequestParam (value = "name", required = false) String name,
+												   @RequestParam (value = "author", required = false) String author){
+		Book filtro = new Book();
+		filtro.setAuthor(author);
+		filtro.setName(name);
+		List<Book> books = bookServ.findByFiltro(filtro);
+		return ResponseEntity.ok(books);
 	}
 	
 	@PostMapping
@@ -82,7 +93,7 @@ public class BookResource {
 			return ResponseEntity.ok().body(obj);
 	}
 	
-	@GetMapping
+	@GetMapping(value="/all")
 	public ResponseEntity<List<Book>> findAll(){
 		List<Book> list = bookServ.findAll();
 		return ResponseEntity.ok().body(list);

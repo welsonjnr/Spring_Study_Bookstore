@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,25 +54,15 @@ public class ClientResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@GetMapping(value = "/findClientByName/{nameClient}")
-	public ResponseEntity<List<Client>> findByNameClientUnico(@PathVariable String nameClient){
-		List<Client> obj = new ArrayList<Client>();
-		String params = nameClient;
-		
-		if(!(params.startsWith("x") && params.endsWith("8"))) {
-		if(nameClient.length() <= 3) {
-			obj = clientServ.findByNameClient(nameClient);
-		}
-		else {
-		String param = params.replace(params.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
-		    obj = clientServ.findByNameClient(param);
-		}
-		return ResponseEntity.ok().body(obj);
-		}
-		obj = clientServ.findAll();
-		return ResponseEntity.ok().body(obj);
+	@GetMapping
+	public ResponseEntity<List<Client>> findByFiltro(@RequestParam (value = "name", required = false) String name,
+												   @RequestParam (value = "cpf", required = false) String cpf){
+		Client filtro = new Client();
+		filtro.setCpf(cpf);
+		filtro.setName(name);
+		List<Client> clients = clientServ.findByFiltro(filtro);
+		return ResponseEntity.ok(clients);
 	}
-	
 	
 	/*
 	 * Este método vai ser requisitado para o POST(Registro de algo no banco de dados)
@@ -101,7 +90,7 @@ public class ClientResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping
+	@GetMapping(value="/all")
 	public ResponseEntity<List<ClientDTO>> findAll(){
 		List<Client> list = clientServ.findAll();
 		/*

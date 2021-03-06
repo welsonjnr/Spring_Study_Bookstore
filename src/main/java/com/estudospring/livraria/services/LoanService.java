@@ -9,8 +9,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
@@ -49,15 +52,42 @@ public class LoanService {
 		return obj.orElseThrow(null);
 	}
 	
-	public List<Loan> findLoanByNameClient(String nameClient) {
-		List<Loan> obj = repoLoan.findByClientNameContaining(nameClient);
+	public List<Loan> findLoanByNameClient(String filtro) {
+		List<Loan> obj = repoLoan.findByClientNameContaining(filtro);
 		
 		if (obj == null) {
-			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
+			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + filtro + ", Tipo: " + Client.class.getName());
 		}
 			return obj;
 	}
-
+	
+	public List<Loan> findLoanByCpfClient(String filtro) {
+		List<Loan> obj = repoLoan.findByClientCpfContaining(filtro);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! CPF do Cliente: " + filtro + ", Tipo: " + Client.class.getName());
+		}
+			return obj;
+	}
+	
+	public List<Loan> findLoanByNameBook(String filtro) {
+		List<Loan> obj = repoLoan.findByBookNameContaining(filtro);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Livro: " + filtro + ", Tipo: " + Book.class.getName());
+		}
+			return obj;
+	}
+	
+	public List<Loan> findLoanByAuthorBook(String filtro) {
+		List<Loan> obj = repoLoan.findByBookAuthorContaining(filtro);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Autor do Livro: " + filtro + ", Tipo: " + Book.class.getName());
+		}
+			return obj;
+	}
+	
 	public Loan insert(Loan loan) {
 		
 		Client cli = servCli.find(loan.getClient().getId());

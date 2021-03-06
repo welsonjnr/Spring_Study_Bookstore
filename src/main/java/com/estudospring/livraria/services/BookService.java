@@ -5,14 +5,15 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Book;
-import com.estudospring.livraria.domain.Category;
-import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.dto.BookDTO;
 import com.estudospring.livraria.repositories.BookRepository;
@@ -46,7 +47,23 @@ public class BookService {
 		}
 		return obj;
 	}
+	
+	public List<Book> findByAuthorBook(String author) {
+		List<Book> obj = bookRepo.findByAuthorContaining(author);
 
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto not found! Nome do Livro: " + author + ", Tipo: " + Book.class.getName());
+		}
+		return obj;
+	}
+
+	public List<Book> findByFiltro(Book filtro){
+		Example example = Example.of(filtro, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+		
+		return bookRepo.findAll(example);
+	}
+	
 	public Book insert(Book book) {
 		book.setId(null);
 		if(book.getAmount() == 1) {

@@ -13,4 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
 	@Transactional
 	List<Book> findByNameContaining(String name);
+	
+	@Transactional
+	List<Book> findByAuthorContaining(String author);
 }

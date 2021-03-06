@@ -13,4 +13,10 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
 
 	@Transactional
 	List<Loan> findByClientNameContaining(String name);
+	@Transactional
+	List<Loan> findByClientCpfContaining(String cpf);
+	@Transactional
+	List<Loan> findByBookNameContaining(String nameBook);
+	@Transactional
+	List<Loan> findByBookAuthorContaining(String auhtor);
 }

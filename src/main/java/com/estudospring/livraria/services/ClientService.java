@@ -5,13 +5,17 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.estudospring.livraria.domain.Address;
+import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.enums.StatusClient;
@@ -40,6 +44,15 @@ public class ClientService {
 	}
 
 	public List<Client> findByNameClient(String nameClient) {
+		List<Client> obj = repoCli.findByNameContaining(nameClient);
+		
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto not found! Nome do Cliente: " + nameClient + ", Tipo: " + Client.class.getName());
+		}
+			return obj;
+		}
+	
+	public List<Client> findByCpfClient(String nameClient) {
 		List<Client> obj = repoCli.findByNameContaining(nameClient);
 		
 		if (obj == null) {
@@ -120,6 +133,12 @@ public class ClientService {
 
 	public List<Client> findAll() {
 		return repoCli.findAll();
+	}
+	
+	public List<Client> findByFiltro(Client filtro){
+		Example example = Example.of(filtro, ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
+		
+		return repoCli.findAll(example);
 	}
 	
 	public void delete(Integer id) {

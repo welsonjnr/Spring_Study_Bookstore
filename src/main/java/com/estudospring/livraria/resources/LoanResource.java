@@ -23,9 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.dto.LoanDTO;
 import com.estudospring.livraria.dto.LoanNewDTO;
+import com.estudospring.livraria.services.BookService;
+import com.estudospring.livraria.services.ClientService;
 import com.estudospring.livraria.services.LoanService;
 
 @RestController
@@ -34,6 +37,12 @@ public class LoanResource {
 	
 	@Autowired
 	private LoanService loanServ;
+	
+	@Autowired
+	private BookService bookServ;
+	
+	@Autowired 
+	private ClientService clientServ;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Loan> find (@PathVariable Integer id){
@@ -50,22 +59,33 @@ public class LoanResource {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@GetMapping(value = "/findLoanByClientName/{nameClient}")
-	public ResponseEntity<List<LoanDTO>> findLoanByNameClient(@PathVariable String nameClient){
+
+	@GetMapping
+	public ResponseEntity<List<Loan>> findByFiltro(@RequestParam (value = "nameclient", required = false) String nameClient,
+												   @RequestParam (value = "cpf", required = false) String cpf,
+												   @RequestParam (value = "namebook", required = false) String nameBook,
+												   @RequestParam (value = "nameauthor", required = false) String nameAuthor){
 		List<Loan> loans = new ArrayList<Loan>();
-		List<LoanDTO> listDto = new ArrayList<LoanDTO>(); 
-		if(nameClient.length() <= 3) {
+		
+		if(nameClient != null) {
 			loans = loanServ.findLoanByNameClient(nameClient);
-			listDto = loans.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
 		}
-		else {
-			String param = nameClient.replace(nameClient.substring(0, 1), nameClient.substring(0, 1).toUpperCase());
-			loans = loanServ.findLoanByNameClient(param);
-			listDto = loans.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
+		if(cpf != null && loans.isEmpty()) {
+			loans = loanServ.findLoanByCpfClient(cpf);
 		}
-		return ResponseEntity.ok().body(listDto);
+		if(nameBook != null && loans.isEmpty()) {
+			loans = loanServ.findLoanByNameBook(nameBook);
+		}
+		if(nameAuthor != null && loans.isEmpty()) {
+			loans = loanServ.findLoanByAuthorBook(nameAuthor);
+		}
+		
+		if(loans.isEmpty()) {
+			loans = loanServ.findAll();
+		}
+		
+		return ResponseEntity.ok(loans);
 	}
-	
 	
 	@PutMapping(value="/renew/{id}")
 	public ResponseEntity<Loan> renewLoan(@Valid @PathVariable Integer id , @RequestBody LoanNewDTO renewLoan){
@@ -88,7 +108,7 @@ public class LoanResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping
+	@GetMapping(value ="/all")
 	public ResponseEntity<List<LoanDTO>> findAll(){
 		List<Loan> list = loanServ.findAll();
 		
