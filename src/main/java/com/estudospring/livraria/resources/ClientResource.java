@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.dto.ClientDTO;
 import com.estudospring.livraria.dto.ClientNewDTO;

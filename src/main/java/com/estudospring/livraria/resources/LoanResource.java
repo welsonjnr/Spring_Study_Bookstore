@@ -22,13 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.estudospring.livraria.domain.Book;
-import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.dto.LoanDTO;
 import com.estudospring.livraria.dto.LoanNewDTO;
-import com.estudospring.livraria.services.BookService;
-import com.estudospring.livraria.services.ClientService;
 import com.estudospring.livraria.services.LoanService;
 
 @RestController
@@ -37,12 +33,6 @@ public class LoanResource {
 	
 	@Autowired
 	private LoanService loanServ;
-	
-	@Autowired
-	private BookService bookServ;
-	
-	@Autowired 
-	private ClientService clientServ;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Loan> find (@PathVariable Integer id){

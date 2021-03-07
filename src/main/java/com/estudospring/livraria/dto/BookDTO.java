@@ -3,7 +3,6 @@ package com.estudospring.livraria.dto;
 import org.springframework.data.domain.Page;
 
 import com.estudospring.livraria.domain.Book;
-import com.estudospring.livraria.domain.Category;
 import com.estudospring.livraria.domain.enums.BookStatus;
 
 public class BookDTO {
