@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import com.estudospring.livraria.domain.enums.StatusClient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 	
-@Entity
+@Entity(name = "CLIENTE")
 
 public class Client implements Serializable {
 

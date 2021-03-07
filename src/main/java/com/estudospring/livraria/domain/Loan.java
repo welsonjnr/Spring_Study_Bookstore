@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.estudospring.livraria.domain.enums.LoanStatus;
 
-@Entity
+@Entity (name = "EMPRESTIMO")
 
 public class Loan implements Serializable {
 

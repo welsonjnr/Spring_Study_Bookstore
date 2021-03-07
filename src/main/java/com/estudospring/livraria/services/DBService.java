@@ -1,4 +1,4 @@
-package com.estudospring.livraria.services;
+/*package com.estudospring.livraria.services;
 
 import java.util.Arrays;
 
@@ -28,8 +28,6 @@ import com.estudospring.livraria.repositories.UserLoginRepository;
 public class DBService {
 	
 	@Autowired
-	private CategoryRepository categoryRepository;
-	@Autowired
 	private BookRepository bookRepository;
 	@Autowired
 	private CityRepository cityRepository;
@@ -41,6 +39,8 @@ public class DBService {
 	private LoanRepository loanRepository;
 	@Autowired
 	private UserLoginRepository userLoginRepo;
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	public void instatiateTestDatabase() {
 		
@@ -95,3 +95,4 @@ public class DBService {
 	}
 	
 }
+*/

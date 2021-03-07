@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 
 
-@Entity
+@Entity (name = "USUARIO")
 
 public class UserLogin implements Serializable {
 

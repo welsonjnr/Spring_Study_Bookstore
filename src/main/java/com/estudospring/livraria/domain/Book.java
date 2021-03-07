@@ -19,8 +19,7 @@ import com.estudospring.livraria.domain.enums.BookStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-@Entity
-
+@Entity(name = "LIVRO")
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
