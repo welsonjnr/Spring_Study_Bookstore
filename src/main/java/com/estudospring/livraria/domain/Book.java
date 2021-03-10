@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,18 +36,16 @@ public class Book implements Serializable {
 	@NotNull(message="Required!")	
 	private Integer amount;
 
-	@ManyToOne
-	@JoinColumn(name="Category_id")
-	private Category category;
+	private String category;
 
 	@JsonIgnore
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client", cascade = CascadeType.ALL)
 	private List<Loan> loans = new ArrayList<>();
 
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, String edition, BookStatus bookStatus,Integer amount, Category category) {
+	public Book(Integer id, String name, String author, String edition, BookStatus bookStatus,Integer amount, String category) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -105,11 +104,11 @@ public class Book implements Serializable {
 		this.amount = amount;
 	}
 
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

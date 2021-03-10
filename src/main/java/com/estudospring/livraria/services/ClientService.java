@@ -14,14 +14,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.estudospring.livraria.domain.Address;
-import com.estudospring.livraria.domain.Book;
 import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.dto.ClientDTO;
 import com.estudospring.livraria.dto.ClientNewDTO;
-import com.estudospring.livraria.repositories.AddressRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;
 
@@ -31,8 +28,6 @@ public class ClientService {
 	@Autowired
 	private ClientRepository repoCli;
 
-	@Autowired
-	private AddressRepository repoAddress;
 	
 	public Client find(Integer id) {
 		Optional<Client> obj = repoCli.findById(id);
@@ -73,16 +68,6 @@ public class ClientService {
 
 	public Client fromDTO(ClientNewDTO objDto) {
 		Client cli = new Client(null, objDto.getName(), objDto.getCpf(), objDto.getCourse(), objDto.getInstitution(), objDto.getEmail(), objDto.getPeriod(), StatusClient.toEnum(objDto.getType()));
-		City city = new City(objDto.getCityId(), null, null, null);
-		Address adr = new Address(null, objDto.getAvenue(), objDto.getNumber(), objDto.getBairro(), cli, city);
-		cli.getAddress().add(adr);
-		cli.getPhones().add(objDto.getPhone1());
-		if(objDto.getPhone2() != null) {
-			cli.getPhones().add(objDto.getPhone2());
-		}
-		if(objDto.getPhone3() != null) {
-			cli.getPhones().add(objDto.getPhone3());
-		}
 	
 		return cli;
 	}
@@ -98,7 +83,6 @@ public class ClientService {
 		obj.setId(null);
 		obj.setStatus(StatusClient.DISPONIVEL);
 		obj = repoCli.save(obj);
-		repoAddress.saveAll(obj.getAddress());
 		return obj;
 
 	}

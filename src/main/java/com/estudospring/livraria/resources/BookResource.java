@@ -46,7 +46,11 @@ public class BookResource {
 		filtro.setAuthor(author);
 		filtro.setName(name);
 		List<Book> books = bookServ.findByFiltro(filtro);
-		return ResponseEntity.ok(books);
+		
+		if(books.isEmpty()) {
+			books = bookServ.findAll();
+		}
+			return ResponseEntity.ok().body(books);
 	}
 	
 	@PostMapping

@@ -13,7 +13,7 @@ public class BookDTO {
 	private String edition;
 	private BookStatus bookStatus;
 	private Integer amount;
-	private Integer category;
+	private String category;
 	
 	public BookDTO() {}
 	
@@ -24,7 +24,7 @@ public class BookDTO {
 		this.edition = book.getEdition();
 		this.bookStatus = book.getBookStatus();
 		this.amount = book.getAmount();
-		this.category = book.getCategory().getId();
+		this.category = book.getCategory();
 	}
 
 	public Integer getId() {
@@ -75,11 +75,11 @@ public class BookDTO {
 		this.amount = amount;
 	}
 
-	public Integer getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Integer category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 

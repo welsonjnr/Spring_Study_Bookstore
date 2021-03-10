@@ -35,15 +35,9 @@ public class Client implements Serializable {
 	private Integer period;
 	private Integer status;
 
-	@OneToMany(mappedBy="client", cascade=CascadeType.ALL)
-	private List<Address> address = new ArrayList<>();
-	
-	@ElementCollection
-	@CollectionTable(name="Phones")
-	private Set<String> phones = new HashSet<>();
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy="client")
+	@OneToMany(mappedBy="client", cascade = CascadeType.ALL)
 	private List<Loan> loans = new ArrayList<>();
 	
 	public Client() {
@@ -117,22 +111,6 @@ public class Client implements Serializable {
 
 	public void setPeriod(Integer period) {
 		this.period = period;
-	}
-
-	public List<Address> getAddress() {
-		return address;
-	}
-
-	public void setAddress(List<Address> address) {
-		this.address = address;
-	}
-
-	public Set<String> getPhones() {
-		return phones;
-	}
-
-	public void setPhones(Set<String> phones) {
-		this.phones = phones;
 	}
 
 	public StatusClient getStatus() {

@@ -30,15 +30,6 @@ public class ClientNewDTO implements Serializable {
 	private Integer period;
 	private Integer type;
 	
-	private String avenue;
-	private Integer number;
-	private String bairro;
-
-	private String phone1;
-	private String phone2;
-	private String phone3;
-
-	private Integer cityId;
 
 	public ClientNewDTO() {
 	}
@@ -97,62 +88,6 @@ public class ClientNewDTO implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
-	}
-
-	public String getAvenue() {
-		return avenue;
-	}
-
-	public void setAvenue(String avenue) {
-		this.avenue = avenue;
-	}
-
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-
-	public String getPhone1() {
-		return phone1;
-	}
-
-	public void setPhone1(String phone1) {
-		this.phone1 = phone1;
-	}
-
-	public String getPhone2() {
-		return phone2;
-	}
-
-	public void setPhone2(String phone2) {
-		this.phone2 = phone2;
-	}
-
-	public String getPhone3() {
-		return phone3;
-	}
-
-	public void setPhone3(String phone3) {
-		this.phone3 = phone3;
-	}
-
-	public Integer getCityId() {
-		return cityId;
-	}
-
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
 	}
 
 }

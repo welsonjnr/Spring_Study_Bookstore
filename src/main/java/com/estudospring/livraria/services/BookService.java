@@ -25,9 +25,6 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepo;
 
-	@Autowired
-	private CategoryService catServ;
-
 	public Book find(Integer idBook) {
 		Optional<Book> book = bookRepo.findById(idBook);
 
@@ -71,7 +68,7 @@ public class BookService {
 		}else {
 			book.setBookStatus(BookStatus.DISPONIVEL);
 		}
-		book.setCategory(catServ.find(book.getCategory().getId()));
+		book.setCategory(book.getCategory());
 		return bookRepo.save(book);
 	}
 
@@ -128,7 +125,7 @@ public class BookService {
 
 	public Book fromDTO(BookDTO objDto) {
 		return new Book(objDto.getId(), objDto.getName(), objDto.getAuthor(), objDto.getEdition(),
-				objDto.getBookStatus(), objDto.getAmount(), catServ.find(objDto.getCategory()));
+				objDto.getBookStatus(), objDto.getAmount(), (objDto.getCategory()));
 	}
 
 }
