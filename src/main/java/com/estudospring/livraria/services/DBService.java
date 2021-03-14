@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estudospring.livraria.domain.Book;
-import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.domain.UserLogin;
@@ -15,7 +14,6 @@ import com.estudospring.livraria.domain.enums.BookStatus;
 import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.repositories.BookRepository;
-import com.estudospring.livraria.repositories.CityRepository;
 import com.estudospring.livraria.repositories.ClientRepository;
 import com.estudospring.livraria.repositories.LoanRepository;
 import com.estudospring.livraria.repositories.UserLoginRepository;
@@ -25,8 +23,6 @@ public class DBService {
 	
 	@Autowired
 	private BookRepository bookRepository;
-	@Autowired
-	private CityRepository cityRepository;
 	@Autowired
 	private ClientRepository clientRepository;
 	@Autowired
@@ -48,12 +44,6 @@ public class DBService {
 		Book bk4 = new Book(null, "asdfsadfsf", "asdf", "Limited 3°",BookStatus.DISPONIVEL, 2, "Sim literatura");
 		
 		bookRepository.saveAll(Arrays.asList(bk1, bk2, bk3, bk4));
-		
-		City cit1 = new City(null, "Goiás", "15675000", "GO");
-		City cit2 = new City(null, "Palmeiras", "76148000", "SP");
-		City cit3 = new City(null, "Manaus", "35265123", "AM");
-		
-		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		
 		Client cli1 = new Client(null, "João C", "83871908029", "ADM", "UNIMB", "joao@gmail.com", 3, StatusClient.PENDENTE);
 		Client cli2 = new Client(null, "Maria B", "47895603094", "Farmácia", "PUC", "maria@gmail.com", 1, StatusClient.DISPONIVEL);

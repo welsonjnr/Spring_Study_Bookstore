@@ -1,4 +1,4 @@
-/*package com.estudospring.livraria.config;
+package com.estudospring.livraria.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,4 +20,4 @@ import com.estudospring.livraria.services.DBService;
 			return true;
 		}
 		
-	}*/
+	}

@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.estudospring.livraria.domain.City;
 import com.estudospring.livraria.domain.Client;
 import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.dto.ClientDTO;
