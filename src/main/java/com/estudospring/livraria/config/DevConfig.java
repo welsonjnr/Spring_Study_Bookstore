@@ -1,4 +1,4 @@
-/*package com.estudospring.livraria.config;
+package com.estudospring.livraria.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class DevConfig {
 	
 	//Esse value está pegando o valor desse campo no application-dev.properties
 	//e armazenando na variável String strategy
-/*	@Value("${spring.jpa.hibernate.ddl-auto}")
+	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
 	
 	@Bean
@@ -33,5 +33,5 @@ public class DevConfig {
 		dbService.instatiateTestDatabase();
 		return true;
 	}		
-}*/
+}
 

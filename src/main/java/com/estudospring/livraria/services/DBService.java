@@ -1,4 +1,4 @@
-/*package com.estudospring.livraria.services;
+package com.estudospring.livraria.services;
 
 import java.util.Arrays;
 
@@ -65,4 +65,3 @@ public class DBService {
 	}
 	
 }
-*/
