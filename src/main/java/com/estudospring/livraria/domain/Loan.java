@@ -20,7 +20,7 @@ public class Loan implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private String loanDay;
