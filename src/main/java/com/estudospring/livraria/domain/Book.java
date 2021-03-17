@@ -23,7 +23,7 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@NotEmpty(message="Required!")
 	private String name;

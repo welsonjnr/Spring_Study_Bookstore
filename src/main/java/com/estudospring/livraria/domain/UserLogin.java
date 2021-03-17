@@ -17,7 +17,7 @@ public class UserLogin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String nome;
 	private String email;
