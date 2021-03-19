@@ -21,6 +21,7 @@ import com.estudospring.livraria.domain.enums.LoanStatus;
 import com.estudospring.livraria.domain.enums.StatusClient;
 import com.estudospring.livraria.dto.LoanNewDTO;
 import com.estudospring.livraria.repositories.LoanRepository;
+import com.estudospring.livraria.services.exceptions.BookIsNotAvailableForRenewal;
 import com.estudospring.livraria.services.exceptions.BookUnavailableForLoan;
 import com.estudospring.livraria.services.exceptions.CustomerWithOpenLoan;
 import com.estudospring.livraria.services.exceptions.ObjectNotFoundException;

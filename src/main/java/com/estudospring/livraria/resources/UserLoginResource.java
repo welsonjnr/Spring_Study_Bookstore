@@ -1,7 +1,10 @@
 package com.estudospring.livraria.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.estudospring.livraria.domain.Book;
+import com.estudospring.livraria.domain.Loan;
 import com.estudospring.livraria.domain.UserLogin;
+import com.estudospring.livraria.dto.BookDTO;
+import com.estudospring.livraria.dto.LoanDTO;
 import com.estudospring.livraria.dto.UserLoginDTO;
 import com.estudospring.livraria.services.UserLoginService;
 import com.estudospring.livraria.services.exceptions.ErrorAuthentication;
@@ -50,8 +58,22 @@ public class UserLoginResource {
 		}catch(ErrorAuthentication e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		
-		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<UserLogin>> findAll(){
+		List<UserLogin> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@PutMapping(value="/{id}")
+	@Transactional
+	public ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody UserLoginDTO userDTO){
+		UserLogin user = service.fromDTO(userDTO);
+		user.setId(id);
+		user  = service.update(user);
+	
+		return ResponseEntity.noContent().build();
 	}
 	
 }
